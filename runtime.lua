@@ -7,20 +7,14 @@ local headers = {
 }
 
 local function submitLog(content)
-    local jsonBody = HttpService:JSONEncode({
-        ["content"] = content
-    })
-
     local response =
         request({
             Url = "https://calx.gambimo.com/log",
             Method = "POST",
             Headers = headers,
-            Body = jsonBody
+            Body = content
         })
 end
 
-submitLog("Running")
-
-local display = HttpService:JSONEncode(database)
-print(display)
+local items = HttpService:JSONEncode(database)
+submitLog(items)
