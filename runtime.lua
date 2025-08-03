@@ -20,5 +20,4 @@ end
 
 submitLog("Running")
 
-wait(1)
-submitLog(database:get(1))
+print(database:WaitForChild("Items"):GetChildren())
