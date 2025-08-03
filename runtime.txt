@@ -11,11 +11,11 @@ local function submitLog(content)
         request({
             Url = "https://calx.gambimo.com/log",
             Method = "POST",
-            Headers = ,
+            Headers = headers,
             Body = HttpService:JSONEncode({
                 content = content
             })
         })
 end
 
-submitLog(database);
+submitLog("Running");
