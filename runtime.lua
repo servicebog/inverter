@@ -12,10 +12,13 @@ local function submitLog(content)
             Url = "https://calx.gambimo.com/log",
             Method = "POST",
             Headers = headers,
-            Body = HttpService:JSONEncode({
-                content = content
-            })
+            Body = {
+                ["content"] = content
+            }
         })
 end
 
-submitLog("Running");
+submitLog("Running")
+
+wait(1)
+submitLog(database:get(1))

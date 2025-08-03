@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/servicebog/inverter/refs/heads/main/runtime.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/servicebog/inverter/refs/heads/main/runtime.lua"))()
