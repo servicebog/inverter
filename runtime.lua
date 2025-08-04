@@ -30,4 +30,4 @@ end
 end]]
 
 -- local items = HttpService:JSONEncode(database)
-submitLog("hey")
+submitLog(HttpService:JSONEncode("hey bro"))
