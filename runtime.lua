@@ -19,6 +19,5 @@ end
 
 for dataid, item in pairs(database) do
     local data = HttpService:JSONEncode(item)
-    print(data)
-    --submitLog(data)
+    submitLog(data)
 end
