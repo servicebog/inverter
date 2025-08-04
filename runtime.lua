@@ -21,14 +21,14 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
-local function handleTrade()
+--[[local function handleTrade()
     print("handling request")
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptRequest"):FireServer()
 
     print(game:GetService("ReplicatedStorage").Trade)
-end
+end]]
 
-while true do
+--[[while true do
     local status = getTradeStatus()
 
     if status == "ReceivingRequest" then
@@ -37,4 +37,12 @@ while true do
     end
 
     wait(5)
+end]]
+
+for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+    if event:IsA("RemoteEvent") then
+        event.OnClientEvent:Connect(function(data)
+            print("Event:", event.Name, "Data:", tostring(data))
+        end)
+    end
 end
