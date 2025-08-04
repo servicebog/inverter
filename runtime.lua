@@ -42,7 +42,15 @@ end]]
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
-            print("Event:", event.Name, "Data:", tostring(data))
+            -- print("Event:", event.Name, "Data:", tostring(data))
+            -- Display data content as string
+            if event.Name == "UpdateTrade" then
+                local content = {
+                    ["UpdateTrade"] = data
+                }
+
+                print(HttpService:JSONEncode(content))
+            end
         end)
     end
 end
