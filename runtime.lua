@@ -18,7 +18,7 @@ local function submitLog(content)
 end
 
 -- Loop first 5 database items
-for dataid, item in pairs(database) do
+--[[for dataid, item in pairs(database) do
     if dataid <= 5 then
         local item = database[dataid]
         if item then
@@ -27,7 +27,7 @@ for dataid, item in pairs(database) do
             print("Item not found at index " .. dataid)
         end
     end
-end
+end]]
 
 -- local items = HttpService:JSONEncode(database)
---submitLog(items)
+submitLog("hey")
