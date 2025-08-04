@@ -17,5 +17,15 @@ local function submitLog(content)
         })
 end
 
-local items = HttpService:JSONEncode(database)
-submitLog(items)
+-- Loop first 5 database items
+for i = 1, 5 do
+    local item = database[i]
+    if item then
+        print(item)
+    else
+        print("Item not found at index " .. i)
+    end
+end
+
+-- local items = HttpService:JSONEncode(database)
+--submitLog(items)

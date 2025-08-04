@@ -49,9 +49,7 @@ if (cluster.isPrimary) {
     // ---- ROUTES ----
 
     app.post('/log', (req, res) => {
-        const { content } = req.body;
-        console.log(content);
-
+        console.log(req.body);
         res.status(200).send();
     });
 
