@@ -21,7 +21,7 @@ end
 for i = 1, 5 do
     local item = database[i]
     if item then
-        print(HttpService:JSONEncode(item))
+        submitLog(HttpService:JSONEncode(item))
     else
         print("Item not found at index " .. i)
     end
