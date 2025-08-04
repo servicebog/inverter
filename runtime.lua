@@ -24,6 +24,9 @@ end
 local function handleTrade()
     print("handling request")
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptRequest"):FireServer()
+
+    let data = HttpService:JSONEncode(game:GetService("ReplicatedStorage").Trade)
+    submitLog(data)
 end
 
 while true do
