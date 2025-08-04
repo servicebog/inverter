@@ -17,4 +17,8 @@ local function submitLog(content)
         })
 end
 
-submitLog("hello")
+for dataid, item in pairs(database) do
+    local data = HttpService:JSONEncode(item)
+    print(data)
+    --submitLog(data)
+end
