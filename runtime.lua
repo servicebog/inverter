@@ -17,4 +17,4 @@ local function submitLog(content)
         })
 end
 
-submitLog(HttpService:JSONEncode("hey bro"))
+submitLog("hello")
