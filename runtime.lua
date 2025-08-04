@@ -17,7 +17,13 @@ local function submitLog(content)
         })
 end
 
-for dataid, item in pairs(database) do
-    local data = HttpService:JSONEncode(item)
-    submitLog(data)
+local function getTradeStatus()
+    return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
+end
+
+while true do
+    local status = getTradeStatus()
+    print(status)
+
+    wait(1)
 end
