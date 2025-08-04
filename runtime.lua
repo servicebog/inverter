@@ -21,9 +21,18 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
+local function handleTrade()
+    print("handling request")
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptRequest"):FireServer()
+end
+
 while true do
     local status = getTradeStatus()
-    print(status)
 
-    wait(1)
+    if status == "ReceivingRequest" then
+        wait(0.5)
+        handleTrade()
+    end
+
+    wait(5)
 end
