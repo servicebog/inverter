@@ -101,15 +101,6 @@ local function monitorTrade()
             end
         end
 
-        local activeTrade = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):GetChildren()
-        for key, data in pairs(activeTrade) do
-            local content = {
-                [key] = data
-            }
-
-            print(HttpService:JSONEncode(content))
-        end
-
         wait(2)
     end
 end
