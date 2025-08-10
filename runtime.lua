@@ -70,6 +70,9 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 print(HttpService:JSONEncode(content))
             end
+            if event.Name == "ChangeInventoryItem" then
+                print(HttpService:JSONEncode(data))
+            end
         end)
     end
 end
