@@ -44,7 +44,7 @@ while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 
         })
     
     print("Ping response:")
-    print(HttpService:JSONEncode(response.Body))
+    print(HttpService:JSONEncode(response))
 
     wait(60)
 end
