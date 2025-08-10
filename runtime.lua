@@ -45,6 +45,29 @@ local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 end
 
+-- PING
+
+local function ping()
+    while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+        local userId = plr.UserId
+        local pingUrl = Webhook.."/ping".."?user="..userId
+
+        local response =
+            request({
+                Url = pingUrl,
+                Method = "GET",
+                Headers = headers
+            })
+
+        local data = HttpService:JSONDecode(response.Body)
+        if data.message then 
+            sendMessage(data.message)
+        end
+
+        wait(60)
+    end
+end
+
 -- LISTEN FOR EVENTS
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
@@ -67,37 +90,25 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     end
 end
 
--- LOOPS
+local function monitorTrade()
+    while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+        if not tradeId then
+            local status = getTradeStatus()
+            print("Trade Status:", status)
 
-while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    local userId = plr.UserId
-    local pingUrl = Webhook.."/ping".."?user="..userId
-
-    local response =
-        request({
-            Url = pingUrl,
-            Method = "GET",
-            Headers = headers
-        })
-
-    local data = HttpService:JSONDecode(response.Body)
-    if data.message then 
-        sendMessage(data.message)
-    end
-
-    wait(60)
-end
-
-while true do
-    if not tradeId then
-        local status = getTradeStatus()
-        print("Trade Status:", status)
-
-        if status == "ReceivingRequest" then
-            tradeId = "test"
-            handleTrade("AcceptRequest")
+            if status == "ReceivingRequest" then
+                tradeId = "test"
+                handleTrade("AcceptRequest")
+            end
         end
-    end
 
-    wait(2)
+        wait(2)
+    end
 end
+
+-- Loops
+
+coroutine.wrap(ping)()
+coroutine.wrap(monitorTrade)()
+
+print("Started multiple loops")
