@@ -61,27 +61,33 @@ while true do
     wait(2)
 end
 
-for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
-    if event:IsA("RemoteEvent") then
-        print("RemoteEvent:", event.Name)
+local function bindRemoteEvents()
+    print("Binding remote events")
 
-        event.OnClientEvent:Connect(function(data)
-            print("Event:", event.Name, "Data:", tostring(data))
-            -- Display data content as string
-            if event.Name == "UpdateTrade" then
-                local content = {
-                    ["UpdateTrade"] = data
-                }
+    for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+        if event:IsA("RemoteEvent") then
+            print("RemoteEvent:", event.Name)
 
-                print(HttpService:JSONEncode(content))
-            end
-            if event.Name == "DeclineTrade" then
-                print("Trade", tradeId, "declined")
-                tradeId = nil
-            end
-        end)
+            event.OnClientEvent:Connect(function(data)
+                print("Event:", event.Name, "Data:", tostring(data))
+                -- Display data content as string
+                if event.Name == "UpdateTrade" then
+                    local content = {
+                        ["UpdateTrade"] = data
+                    }
+
+                    print(HttpService:JSONEncode(content))
+                end
+                if event.Name == "DeclineTrade" then
+                    print("Trade", tradeId, "declined")
+                    tradeId = nil
+                end
+            end)
+        end
     end
 end
+
+bindRemoteEvents()
 
 -- PING
 
