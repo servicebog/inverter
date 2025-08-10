@@ -14,19 +14,11 @@ local headers = {
 -- HELPERS
 
 local function sendMessage(message)
-    -- Get the default "All" channel (RBXGeneral)
     local channel = TextChatService.TextChannels.RBXGeneral
 
-    -- Send a message to the chat
     local success, errorMessage = pcall(function()
         channel:SendAsync(message)
     end)
-
-    if success then
-        print("Message sent to chat!")
-    else
-        print("Failed to send message:", errorMessage)
-    end
 end
 
 local function getTradeStatus()
@@ -75,6 +67,9 @@ end]]
 end]]
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+    print("Event:", event.Name)
+    print(HttpService:JSONEncode(event))
+
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
             print("Event:", event.Name, "Data:", tostring(data))
