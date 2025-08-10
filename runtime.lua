@@ -43,7 +43,7 @@ end]]
 end]]
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    local userId = plr.userId
+    local userId = plr.UserId
     local pingUrl = Webhook.."/log".."?user="..userId
 
     print(pingUrl)
