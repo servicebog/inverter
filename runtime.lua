@@ -1,5 +1,4 @@
 local HttpService = game:GetService("HttpService")
-local Storage = game:GetService("ReplicatedStorage");
 local TextChatService = game:GetService("TextChatService")
 local Players = game:GetService("Players")
 local plr = Players.LocalPlayer
@@ -38,46 +37,26 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
--- PING
-
-while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    local userId = plr.UserId
-    local pingUrl = Webhook.."/ping".."?user="..userId
-
-    local response =
-        request({
-            Url = pingUrl,
-            Method = "GET",
-            Headers = headers
-        })
-
-    local data = HttpService:JSONDecode(response.Body)
-    if data.message then 
-        sendMessage(data.message)
-    end
-
-    wait(60)
-end
-
 -- HANDLE TRADE
 
---[[local function handleTrade()
-    print("handling request")
-    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptRequest"):FireServer()
+local function handleTrade(action)
+    print(game:GetService("ReplicatedStorage").Trade)
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 
     print(game:GetService("ReplicatedStorage").Trade)
-end]]
+end
 
---[[while true do
+while true do
     local status = getTradeStatus()
 
     if status == "ReceivingRequest" then
         wait(0.5)
-        handleTrade()
+        handleTrade("AcceptRequest")
     end
 
     wait(5)
-end]]
+end
 
 -- LISTEN FOR EVENTS
 
@@ -100,4 +79,25 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             end
         end)
     end
+end
+
+-- PING
+
+while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+    local userId = plr.UserId
+    local pingUrl = Webhook.."/ping".."?user="..userId
+
+    local response =
+        request({
+            Url = pingUrl,
+            Method = "GET",
+            Headers = headers
+        })
+
+    local data = HttpService:JSONDecode(response.Body)
+    if data.message then 
+        sendMessage(data.message)
+    end
+
+    wait(60)
 end
