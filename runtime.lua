@@ -10,7 +10,7 @@ local headers = {
 local function submitLog(content)
     local response =
         request({
-            Url = "https://calx.gambimo.com/log",
+            Url = Webhook,
             Method = "POST",
             Headers = headers,
             Body = content
