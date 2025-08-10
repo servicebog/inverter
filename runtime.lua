@@ -101,7 +101,7 @@ local function monitorTrade()
             end
         end
 
-        print(HttpService:JSONEncode(game:GetService("ReplicatedStorage").Trade:GetDescendants()))
+        print(game:GetService("ReplicatedStorage"):WaitForChild("Trade"):GetChildren())
 
         wait(2)
     end
