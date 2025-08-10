@@ -83,8 +83,8 @@ end]]
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     print("Event:", event.Name)
-    print(HttpService:JSONEncode(event))
-    
+    print("Type:", event.ClassName)
+
     submitLog(event)
 
     if event:IsA("RemoteEvent") then
