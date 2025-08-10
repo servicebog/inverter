@@ -50,14 +50,14 @@ end
 -- LISTEN FOR EVENTS
 
 while true do
-    if tradeId then return
+    if not tradeId then
+        local status = getTradeStatus()
+        print("Trade Status:", status)
 
-    local status = getTradeStatus()
-    print("Trade Status:", status)
-
-    if status == "ReceivingRequest" then
-        tradeId = "test"
-        handleTrade("AcceptRequest")
+        if status == "ReceivingRequest" then
+            tradeId = "test"
+            handleTrade("AcceptRequest")
+        end
     end
 
     wait(2)
