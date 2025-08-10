@@ -13,7 +13,7 @@ local headers = {
 local function submitLog(content)
     local response =
         request({
-            Url = Webhook + "/log",
+            Url = Webhook .. "/log",
             Method = "POST",
             Headers = headers,
             Body = content
