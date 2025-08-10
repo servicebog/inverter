@@ -64,8 +64,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     print("Event:", event.Name)
     print("Type:", event.ClassName)
 
-    submitLog(event)
-
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
             print("Event:", event.Name, "Data:", tostring(data))
