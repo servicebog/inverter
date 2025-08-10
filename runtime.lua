@@ -20,10 +20,6 @@ local function submitLog(content)
         })
 end
 
-local function GetUserId(name: string)
-	return Players:GetUserIdFromNameAsync(name)
-end
-
 local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
@@ -47,8 +43,10 @@ end]]
 end]]
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    local userId = getUserId(plr);
-    local pingUrl = Webhook.."/log".."?user="..userId;
+    local userId = plr.userId
+    local pingUrl = Webhook.."/log".."?user="..userId
+
+    print(pingUrl)
 
     local response =
         request({
