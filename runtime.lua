@@ -43,8 +43,6 @@ local tradeId = nil
 
 local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
-
-    print(game:GetService("ReplicatedStorage").Trade)
 end
 
 -- LISTEN FOR EVENTS
@@ -75,8 +73,9 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 print(HttpService:JSONEncode(content))
             end
-            if event.Name == "ChangeInventoryItem" then
-                print(HttpService:JSONEncode(data))
+            if event.Name == "DeclineTrade" then
+                print("Trade", tradeId, "declined")
+                tradeId = nil
             end
         end)
     end
