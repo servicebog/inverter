@@ -39,24 +39,29 @@ end
 
 -- HANDLE TRADE
 
+local tradeId = nil
+
 local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 
     print(game:GetService("ReplicatedStorage").Trade)
 end
 
---[[while true do
+-- LISTEN FOR EVENTS
+
+while true do
+    if tradeId then return
+
     local status = getTradeStatus()
+    print("Trade Status:", status)
 
     if status == "ReceivingRequest" then
-        wait(0.5)
+        tradeId = "test"
         handleTrade("AcceptRequest")
     end
 
-    wait(5)
-end]]
-
--- LISTEN FOR EVENTS
+    wait(2)
+end
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
