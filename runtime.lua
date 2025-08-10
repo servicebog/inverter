@@ -83,7 +83,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 print(HttpService:JSONEncode(content))
             end
             if event.Name == "DeclineTrade" then
-                print(tradeId)
                 tradeId = nil
             end
         end)
@@ -102,6 +101,8 @@ local function monitorTrade()
             end
         end
 
+        print(HttpService:JSONEncode(game:GetService("ReplicatedStorage").Trade:GetDescendants()))
+
         wait(2)
     end
 end
@@ -110,5 +111,3 @@ end
 
 coroutine.wrap(ping)()
 coroutine.wrap(monitorTrade)()
-
-print("Started multiple loops")
