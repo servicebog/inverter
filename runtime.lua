@@ -66,7 +66,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             end
         end)
     end
-    if event:IsA("RemoteFunction") then
+    --[[if event:IsA("RemoteFunction") then
         event.OnClientInvoke = function(data)
             print("Event:", event.Name, "Data:", tostring(data))
             -- Display data content as string
@@ -78,5 +78,5 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 print(HttpService:JSONEncode(content))
             end
         end
-    end
+    end]]
 end
