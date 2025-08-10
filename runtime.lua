@@ -46,8 +46,6 @@ while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 
     local userId = plr.UserId
     local pingUrl = Webhook.."/log".."?user="..userId
 
-    print(pingUrl)
-
     local response =
         request({
             Url = pingUrl,
