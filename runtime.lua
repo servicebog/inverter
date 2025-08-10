@@ -45,7 +45,9 @@ while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 
     
     print("Ping response:")
     print(response.Body)
-    print(response.Body.message)
+
+    local data = HttpService:JSONParse(response.Body)
+    print(data.message)
 
     wait(60)
 end
