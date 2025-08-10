@@ -21,7 +21,7 @@ local function submitLog(content)
 end
 
 local function GetUserId(name: string)
-	return game:GetService("Players"):GetUserIdFromNameAsync(name)
+	return Players:GetUserIdFromNameAsync(name)
 end
 
 local function getTradeStatus()
@@ -47,14 +47,15 @@ end]]
 end]]
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+    local userId = getUserId(plr.Name);
     local response =
         request({
-            Url = Webhook .. "/log",
+            Url = Webhook.."/log".."?user="..userId,
             Method = "GET",
             Headers = headers
         })
-
-    print(getUserId(plr.Name))
+    
+    print(response.Body)
 
     wait(60)
 end
