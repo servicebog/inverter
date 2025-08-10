@@ -1,4 +1,5 @@
 local HttpService = game:GetService("HttpService")
+local Storage = game:GetService("ReplicatedStorage");
 local TextChatService = game:GetService("TextChatService")
 local Players = game:GetService("Players")
 local plr = Players.LocalPlayer
@@ -65,6 +66,14 @@ end]]
 
     wait(5)
 end]]
+
+-- LISTEN FOR EVENTS
+
+while true do
+    print(HttpService:JSONEncode(Storage))
+
+    wait(120)
+end
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     print("Event:", event.Name)
