@@ -47,20 +47,6 @@ end
 
 -- LISTEN FOR EVENTS
 
-while true do
-    if not tradeId then
-        local status = getTradeStatus()
-        print("Trade Status:", status)
-
-        if status == "ReceivingRequest" then
-            tradeId = "test"
-            handleTrade("AcceptRequest")
-        end
-    end
-
-    wait(2)
-end
-
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
@@ -73,11 +59,15 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 print(HttpService:JSONEncode(content))
             end
+            if event.Name == "DeclineTrade" then
+                print(tradeId)
+                tradeId = nil
+            end
         end)
     end
 end
 
--- PING
+-- LOOPS
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
     local userId = plr.UserId
@@ -96,4 +86,18 @@ while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 
     end
 
     wait(60)
+end
+
+while true do
+    if not tradeId then
+        local status = getTradeStatus()
+        print("Trade Status:", status)
+
+        if status == "ReceivingRequest" then
+            tradeId = "test"
+            handleTrade("AcceptRequest")
+        end
+    end
+
+    wait(2)
 end
