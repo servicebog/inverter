@@ -36,15 +36,23 @@ while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 
     local userId = plr.UserId
     local pingUrl = Webhook.."/log".."?user="..userId
 
-    local response =
-        request({
+    local success, response = pcall(function()
+        return HttpService:RequestAsync({
             Url = pingUrl,
             Method = "GET",
             Headers = headers
         })
+    end)
+    
+    if not success then
+        print("Request failed:", response)
+        response = {Body = "Error: " .. tostring(response)}
+    end
     
     print("Ping response:")
-    print(HttpService:JSONEncode(response))
+    print("Full response:", HttpService:JSONEncode(response))
+    print("Response body:", response.Body or "No body")
+    print("Response status:", response.StatusCode or "No status")
 
     wait(60)
 end
