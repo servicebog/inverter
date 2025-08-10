@@ -43,8 +43,8 @@ end]]
 end]]
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    submitLog("ping")
-    print(plr)
+    submitLog(HttpService:JSONEncode("ping"))
+    print(HttpService:JSONEncode(plr))
 
     wait(60)
 end
