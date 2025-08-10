@@ -14,6 +14,18 @@ local headers = {
 
 -- HELPERS
 
+local function submitLog(content) 
+    local logUrl = Webhook.."/log"
+
+    local response =
+        request({
+            Url = logUrl,
+            Method = "POST",
+            Headers = headers,
+            Body = HttpService:JSONEncode(content)
+        })
+end
+
 local function sendMessage(message)
     local channel = TextChatService.TextChannels.RBXGeneral
 
@@ -69,15 +81,11 @@ end]]
 
 -- LISTEN FOR EVENTS
 
-while true do
-    print(HttpService:JSONEncode(Storage))
-
-    wait(120)
-end
-
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     print("Event:", event.Name)
     print(HttpService:JSONEncode(event))
+    
+    submitLog(event)
 
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
