@@ -40,14 +40,12 @@ end
 -- HANDLE TRADE
 
 local function handleTrade(action)
-    print(game:GetService("ReplicatedStorage").Trade)
-    
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 
     print(game:GetService("ReplicatedStorage").Trade)
 end
 
-while true do
+--[[while true do
     local status = getTradeStatus()
 
     if status == "ReceivingRequest" then
@@ -56,11 +54,13 @@ while true do
     end
 
     wait(5)
-end
+end]]
 
 -- LISTEN FOR EVENTS
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+    print("event captured")
+
     print("Event:", event.Name)
     print("Type:", event.ClassName)
 
