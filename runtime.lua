@@ -59,10 +59,6 @@ end]]
 -- LISTEN FOR EVENTS
 
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
-    print("event captured")
-
-    print("Event:", event.Name)
-
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
             print("Event:", event.Name, "Data:", tostring(data))
