@@ -47,10 +47,12 @@ end]]
 end]]
 
 while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-    local userId = getUserId(plr.Name);
+    local userId = getUserId(plr);
+    local pingUrl = Webhook.."/log".."?user="..userId;
+
     local response =
         request({
-            Url = Webhook.."/log".."?user="..userId,
+            Url = pingUrl,
             Method = "GET",
             Headers = headers
         })
