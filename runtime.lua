@@ -10,16 +10,6 @@ local headers = {
     ["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 }
 
-local function submitLog(content)
-    local response =
-        request({
-            Url = Webhook .. "/log",
-            Method = "POST",
-            Headers = headers,
-            Body = content
-        })
-end
-
 local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
