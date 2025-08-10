@@ -101,7 +101,10 @@ local function monitorTrade()
             end
         end
 
-        print(game:GetService("ReplicatedStorage"):WaitForChild("Trade"):GetChildren())
+        local activeTrade = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):GetChildren()
+        for key, _ in pairs(activeTrade) do
+            print(key)
+        end
 
         wait(2)
     end
