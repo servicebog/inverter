@@ -92,10 +92,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                     }
                 }
 
-                --[[local content = {
-                    ["UpdateTrade"] = data
-                }]]
-
                 print(HttpService:JSONEncode(tradeData))
             end
             if event.Name == "DeclineTrade" then
@@ -143,5 +139,5 @@ end]]
 
 -- Loops
 
-coroutine.wrap(ping)()
+--coroutine.wrap(ping)()
 --coroutine.wrap(monitorTrade)()
