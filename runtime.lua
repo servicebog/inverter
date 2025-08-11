@@ -86,16 +86,14 @@ local function incomingRequest(userId)
         print(HttpService:JSONEncode(response))
         local data = HttpService:JSONDecode(response.Body)
 
-        if data.id then
-            print(tradeId)
+        if data.tradeId then
+            print(data.tradeId)
             handleTrade("AcceptRequest")
 
-            tradeId = data.id
+            tradeId = data.tradeId
             tradeData = {}
         else
-            print("declining")
             handleTrade("DeclineRequest")
-            
             tradeUser = nil
         end
     end
@@ -156,7 +154,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     end
     if event:IsA("RemoteFunction") then
         event.OnClientInvoke = function(data)
-            print("Function:", event.Name, "Data:", tostring(data))
+            --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
                 print("Trade from User ID:", tradeUser)
@@ -170,14 +168,14 @@ local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
         if not tradeId and tradeUser then
             local status = getTradeStatus()
-            print("Trade Status:", status)
+            --print("Trade Status:", status)
 
             if status == "ReceivingRequest" then
                 incomingRequest(tradeUser)
             end
         end
 
-        wait(2)
+        wait(1.2)
     end
 end
 
