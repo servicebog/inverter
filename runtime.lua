@@ -68,12 +68,19 @@ local function incomingRequest(userId)
         print(Webhook.."/initiate")
         print(HttpService:JSONEncode(payload))
 
-        local response = request({
-            Url = Webhook.."/initiate",
-            Method = "POST",
-            Headers = headers,
-            Body = HttpService:JSONEncode(payload)
-        })
+        local response, err = pcall(function()
+            return request({
+                Url = Webhook.."/initiate",
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(payload)
+            })
+        end)
+
+        if err then
+            print("Error initiating trade:", tostring(err))
+            return handleTrade("DeclineRequest")
+        end
 
         print(HttpService:JSONEncode(response))
         local body = HttpService:JSONDecode(response.Body)
