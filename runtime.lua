@@ -89,16 +89,12 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             if event.Name == "DeclineTrade" then
                 tradeId = nil
             end
-            if event.Name == "AcceptTrade" then
-                local tradeData = getTrade()
-                local content = {
-                    ["AcceptTrade"] = tradeData
-                }
-
-                print(HttpService:JSONEncode(content))
-                tradeId = nil
-            end
         end)
+    end
+    if event:IsA("RemoteFunction") then
+        event.OnClientInvoke = function(data)
+            print("Function:", event.Name, "Data:", tostring(data))
+        end
     end
 end
 
