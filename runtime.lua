@@ -43,7 +43,8 @@ local function getTradeStatus()
 end
 
 local function getTrade()
-    game:GetService("ReplicatedStorage").Trade.UpdateTrade:FireServer()
+    print(game:GetService("ReplicatedStorage").Trade)
+    print(game:GetService("ReplicatedStorage").Trade:GetChildren())
 end
 
 -- HANDLE TRADE
@@ -95,7 +96,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeId = nil
             end
             if event.Name == "AcceptTrade" then
-                -- local tradeData = getTrade()
+                local tradeData = getTrade()
             end
         end)
     end
