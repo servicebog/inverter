@@ -65,11 +65,11 @@ local function incomingRequest(userId)
             ["trader"] = plr.UserId
         }
 
-        print(Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,)
+        print(Webhook.."/initiate?trader="..plr.UserId.."&user="...userId)
         print(HttpService:JSONEncode(payload))
 
         local response = request({
-            Url = Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,,
+            Url = Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,
             Method = "GET",
             Headers = headers
         })
