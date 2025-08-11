@@ -5,13 +5,17 @@ local plr = Players.LocalPlayer
 
 local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
 
+local tradeId = nil
+local tradeUser = nil
+local tradeData = {}
+
+-- REQUESTS
+
 local headers = {
     ["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
     ["Content-Type"] = "application/json",
     ["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 }
-
--- HELPERS
 
 local function submitLog(content) 
     local logUrl = Webhook.."/log"
@@ -24,6 +28,8 @@ local function submitLog(content)
             Body = HttpService:JSONEncode(content)
         })
 end
+
+-- HELPERS
 
 local function sendMessage(message)
     local channel = TextChatService.TextChannels.RBXGeneral
@@ -38,18 +44,10 @@ local function getUserId(username)
 end
 
 local function getTradeStatus()
-    print(HttpService:JSONEncode(game:GetService("ReplicatedStorage").Trade.GetTradeStatus))
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
-local function getTrade()
-    print(game:GetService("ReplicatedStorage").Trade)
-    print(game:GetService("ReplicatedStorage").Trade:GetChildren())
-end
-
 -- HANDLE TRADE
-
-local tradeId = nil
 
 local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
@@ -86,17 +84,25 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             print("Event:", event.Name, "Data:", tostring(data))
             -- Display data content as string
             if event.Name == "UpdateTrade" then
-                local content = {
-                    ["UpdateTrade"] = data
+                tradeData = {
+                    ["tradeId"] = tradeId,
+                    ["trade"] = {
+                        [tradeUser] = data.Player1.Offer,
+                        [plr.UserId] = data.Player2.Offer
+                    }
                 }
 
-                print(HttpService:JSONEncode(content))
+                --[[local content = {
+                    ["UpdateTrade"] = data
+                }]]
+
+                print(HttpService:JSONEncode(tradeData))
             end
             if event.Name == "DeclineTrade" then
                 tradeId = nil
             end
             if event.Name == "AcceptTrade" then
-                local tradeData = getTrade()
+                print(HttpService:JSONEncode(tradeData))
             end
         end)
     end
@@ -104,8 +110,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
         event.OnClientInvoke = function(data)
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
-                local userId = getUserId(tostring(data))
-                print("User ID:", userId)
+                tradeUser = getUserId(tostring(data))
 
                 wait(1)
 
