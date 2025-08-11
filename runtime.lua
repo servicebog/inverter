@@ -67,7 +67,7 @@ local function incomingRequest(userId)
         }
 
         print(HttpService:JSONEncode(payload))
-        local data = postRequest("/initiate", payload)
+        local data = postRequest("/log", payload)
 
         print(HttpService:JSONEncode(data))
 
