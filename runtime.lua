@@ -43,12 +43,8 @@ end
 
 local function getTrade()
     --return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
-    for _, obj in pairs(game:GetService("ReplicatedStorage").Trade.OfferItem:GetChildren()) do
-        print("Child:", obj.Name, "Class:", obj.ClassName)
-    end
-    for _, obj in pairs(game:GetService("ReplicatedStorage").Remotes:GetChildren()) do
-        print("Child:", obj.Name, "Class:", obj.ClassName)
-    end
+    local data = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("UpdateTrade"):FireServer()
+    print(HttpService:JSONEncode(data))
 end
 
 -- HANDLE TRADE
@@ -108,7 +104,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
         event.OnClientInvoke = function(data)
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
-                print("Player ID:", data.UserId)
                 local userId = getUserId(tostring(data))
                 print("User ID:", userId)
 
