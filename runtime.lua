@@ -61,7 +61,7 @@ local function incomingRequest(userId)
     print(status)
 
     if status == "ReceivingRequest" then
-        local reqUrl = Webhook.."/mm2/initiate".."?trader="..plr.UserId.."user="..userId
+        local reqUrl = Webhook.."/mm2/initiate".."?trader="..plr.UserId.."&user="..userId
         print(reqUrl)
 
         local response =
