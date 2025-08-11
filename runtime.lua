@@ -105,7 +105,8 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
         event.OnClientInvoke = function(data)
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
-                local userId = getUserId(tostring(data))
+                print("Player ID:", data.UserId)
+                local userId = getUserId(data)
                 print("User ID:", userId)
 
                 wait(1)
