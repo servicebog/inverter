@@ -43,7 +43,7 @@ end
 
 local function getTrade()
     --return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
-    for _, obj in pairs(game:GetService("ReplicatedStorage").Trade:GetChildren()) do
+    for _, obj in pairs(game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("GetRequest"):GetChildren()) do
         print("Child:", obj.Name, "Class:", obj.ClassName)
     end
 end
@@ -104,11 +104,24 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteFunction") then
         event.OnClientInvoke = function(data)
             print("Function:", event.Name, "Data:", tostring(data))
+            if event.Name == "SendRequest" then
+                local userId = getUserId(tosting(data))
+                print("User ID:", userId)
+
+                wait(1)
+
+                local status = getTradeStatus()
+
+                if status == "ReceivingRequest" then
+                    tradeId = "test"
+                    handleTrade("AcceptRequest")
+                end
+            end
         end
     end
 end
 
-local function monitorTrade()
+--[[local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
         if not tradeId then
             local status = getTradeStatus()
@@ -122,9 +135,9 @@ local function monitorTrade()
 
         wait(2)
     end
-end
+end]]
 
 -- Loops
 
 coroutine.wrap(ping)()
-coroutine.wrap(monitorTrade)()
+--coroutine.wrap(monitorTrade)()
