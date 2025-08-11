@@ -34,7 +34,7 @@ local function sendMessage(message)
 end
 
 local function getUserId(username)
-    return players:GetUserIdFromNameAsync(Username)
+    return players:GetUserIdFromNameAsync(username)
 end
 
 local function getTradeStatus()
@@ -105,7 +105,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
         event.OnClientInvoke = function(data)
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
-                local userId = getUserId(tosting(data))
+                local userId = getUserId(tostring(data))
                 print("User ID:", userId)
 
                 wait(1)
