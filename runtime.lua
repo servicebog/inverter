@@ -37,8 +37,8 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
-local function getTradeData()
-    return game:GetService("ReplicatedStorage").Trade.GetTradeData:InvokeServer()
+local function getTrade()
+    return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
 end
 
 -- HANDLE TRADE
