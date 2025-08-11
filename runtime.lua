@@ -43,7 +43,10 @@ end
 
 local function getTrade()
     --return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
-    for _, obj in pairs(game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("GetRequest"):GetChildren()) do
+    for _, obj in pairs(game:GetService("ReplicatedStorage").Trade.OfferItem:GetChildren()) do
+        print("Child:", obj.Name, "Class:", obj.ClassName)
+    end
+    for _, obj in pairs(game:GetService("ReplicatedStorage").Remotes:GetChildren()) do
         print("Child:", obj.Name, "Class:", obj.ClassName)
     end
 end
