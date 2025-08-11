@@ -67,6 +67,8 @@ local function incomingRequest(userId)
             })
         })
 
+        print(HttpService:JSONEncode(response))
+
         local body = HttpService:JSONDecode(response.Body)
         if body.tradeId then
             tradeId = body.tradeId
