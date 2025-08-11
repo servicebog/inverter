@@ -47,10 +47,36 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
--- HANDLE TRADE
-
 local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
+end
+
+-- HANDLE TRADE
+
+local function incomingRequest(userId)
+    local status = getTradeStatus()
+
+    if status == "ReceivingRequest" then
+        local response = request({
+            Url = Webhook.."/initiate",
+            Method = "POST",
+            Headers = headers,
+            Body = HttpService:JSONEncode({
+                ["user"] = userId,
+                ["trader"] = plr.UserId
+            })
+        })
+
+        local body = HttpService:JSONDecode(response.Body)
+        if body.tradeId then
+            tradeId = body.tradeId
+            tradeData = {}
+
+            handleTrade("AcceptRequest")
+        else
+            handleTrade("DeclineRequest")
+        end
+    end
 end
 
 -- PING
@@ -107,15 +133,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
-
-                wait(1)
-
-                local status = getTradeStatus()
-
-                if status == "ReceivingRequest" then
-                    tradeId = "test"
-                    handleTrade("AcceptRequest")
-                end
+                incomingRequest(tradeUser)
             end
         end
     end
