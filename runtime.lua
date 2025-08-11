@@ -62,6 +62,7 @@ local function incomingRequest(userId)
 
     if status == "ReceivingRequest" then
         local reqUrl = Webhook.."/initiate".."?trader="..plr.UserId.."user="..userId
+        print(reqUrl)
 
         local response =
             request({
@@ -70,6 +71,7 @@ local function incomingRequest(userId)
                 Headers = headers
             })
 
+        print(response)
         local data = HttpService:JSONDecode(response.Body)
 
         if data.tradeId then
@@ -163,5 +165,5 @@ end
 
 -- Loops
 
---coroutine.wrap(ping)()
+coroutine.wrap(ping)()
 coroutine.wrap(monitorTrade)()
