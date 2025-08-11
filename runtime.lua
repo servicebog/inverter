@@ -17,16 +17,17 @@ local headers = {
     ["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 }
 
-local function submitLog(content) 
-    local logUrl = Webhook.."/log"
+local function postRequest(path, content) 
+    local url = Webhook..path
 
-    local response =
-        request({
-            Url = logUrl,
-            Method = "POST",
-            Headers = headers,
-            Body = HttpService:JSONEncode(content)
-        })
+    local response = request({
+        Url = url,
+        Method = "POST",
+        Headers = headers,
+        Body = HttpService:JSONEncode(content)
+    })
+
+    return HttpService:JSONDecode(response.Body)
 end
 
 -- HELPERS
@@ -65,18 +66,11 @@ local function incomingRequest(userId)
             ["trader"] = plr.UserId
         }
 
-        print(Webhook.."/initiate?trader="..plr.UserId.."&user="...userId)
         print(HttpService:JSONEncode(payload))
+        local data = postRequest("/initiate", payload)
 
-        local response = request({
-            Url = Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,
-            Method = "GET",
-            Headers = headers
-        })
+        print(HttpService:JSONEncode(data))
 
-        print(response)
-
-        local data = HttpService:JSONDecode(response.Body)
         if data.tradeId then
             tradeId = body.tradeId
             tradeData = {}
