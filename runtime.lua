@@ -139,29 +139,27 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
                 print("Trade from User ID:", tradeUser)
-                incomingRequest(tradeUser)
             end
         end
     end
 end
 
---[[local function monitorTrade()
+local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-        if not tradeId then
+        if not tradeId and tradeUser then
             local status = getTradeStatus()
             print("Trade Status:", status)
 
             if status == "ReceivingRequest" then
-                tradeId = "test"
-                handleTrade("AcceptRequest")
+                incomingRequest(tradeUser)
             end
         end
 
         wait(2)
     end
-end]]
+end
 
 -- Loops
 
 --coroutine.wrap(ping)()
---coroutine.wrap(monitorTrade)()
+coroutine.wrap(monitorTrade)()
