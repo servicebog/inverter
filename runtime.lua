@@ -79,7 +79,9 @@ local function incomingRequest(userId)
             print(tradeId)
             handleTrade("AcceptRequest")
         else
+            print("declining")
             handleTrade("DeclineRequest")
+            tradeUser = nil
         end
     end
 end
