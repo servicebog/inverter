@@ -61,11 +61,11 @@ local function incomingRequest(userId)
     print(status)
 
     if status == "ReceivingRequest" then
-        local url = Webhook.."/initiate".."?trader="..plr.UserId.."user="..userId
+        local reqUrl = Webhook.."/initiate".."?trader="..plr.UserId.."user="..userId
 
         local response =
             request({
-                Url = url,
+                Url = reqUrl,
                 Method = "GET",
                 Headers = headers
             })
