@@ -54,6 +54,8 @@ end
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
+    wait(1)
+
     local status = getTradeStatus()
     print(status)
 
@@ -63,6 +65,7 @@ local function incomingRequest(userId)
             ["trader"] = plr.UserId
         }
 
+        print(Webhook.."/initiate")
         print(HttpService:JSONEncode(payload))
 
         local response = request({
