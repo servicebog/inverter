@@ -38,6 +38,7 @@ local function getUserId(username)
 end
 
 local function getTradeStatus()
+    print(HttpService:JSONEncode(game:GetService("ReplicatedStorage").Trade.GetTradeStatus))
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
@@ -94,7 +95,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeId = nil
             end
             if event.Name == "AcceptTrade" then
-                local tradeData = getTrade()
+                -- local tradeData = getTrade()
             end
         end)
     end
