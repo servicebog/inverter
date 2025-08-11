@@ -80,7 +80,7 @@ local function incomingRequest(userId)
     local data = HttpService:JSONDecode(response.Body)
 
     if data.id then
-        tradeId = body.id
+        tradeId = data.id
         tradeData = {}
 
         print(tradeId)
@@ -137,7 +137,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeId = nil
                 tradeUser = nil
                 tradeData = {}
-                
+
                 print("Trade declined.")
             end
             if event.Name == "AcceptTrade" then
