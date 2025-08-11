@@ -102,6 +102,8 @@ local function ping()
                 Headers = headers
             })
 
+        print(response)
+
         local data = HttpService:JSONDecode(response.Body)
         if data.message then 
             sendMessage(data.message)
