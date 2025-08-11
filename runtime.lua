@@ -62,16 +62,20 @@ local function incomingRequest(userId)
 
     if status == "ReceivingRequest" then
         local reqUrl = Webhook.."/mm2/initiate".."?trader="..plr.UserId.."&user="..userId
-        print(reqUrl)
+        local payload = {
+            ["trader"] = plr.UserId,
+            ["user"] = userId
+        }
 
         local response =
             request({
                 Url = reqUrl,
-                Method = "GET",
-                Headers = headers
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(payload)
             })
 
-        print(response)
+        print(HttpService:JSONEncode(response))
         local data = HttpService:JSONDecode(response.Body)
 
         if data.tradeId then
@@ -92,8 +96,6 @@ end
 
 local function ping()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-        print("pinging")
-        
         local userId = plr.UserId
         local pingUrl = Webhook.."/ping".."?user="..userId
 
@@ -103,8 +105,6 @@ local function ping()
                 Method = "GET",
                 Headers = headers
             })
-
-        print(response)
 
         local data = HttpService:JSONDecode(response.Body)
         if data.message then 
