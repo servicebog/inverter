@@ -58,14 +58,18 @@ local function incomingRequest(userId)
     print(status)
 
     if status == "ReceivingRequest" then
+        local payload = {
+            ["user"] = userId,
+            ["trader"] = plr.UserId
+        }
+
+        print(HttpService:JSONEncode(payload))
+
         local response = request({
             Url = Webhook.."/initiate",
             Method = "POST",
             Headers = headers,
-            Body = HttpService:JSONEncode({
-                ["user"] = userId,
-                ["trader"] = plr.UserId
-            })
+            Body = HttpService:JSONEncode(payload)
         })
 
         print(HttpService:JSONEncode(response))
