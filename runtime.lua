@@ -136,6 +136,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
+                print("Trade from User ID:", tradeUser)
                 incomingRequest(tradeUser)
             end
         end
