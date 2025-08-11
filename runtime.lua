@@ -37,6 +37,10 @@ local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
+local function getTradeData()
+    return game:GetService("ReplicatedStorage").Trade.GetTradeData:InvokeServer()
+end
+
 -- HANDLE TRADE
 
 local tradeId = nil
@@ -83,6 +87,15 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 print(HttpService:JSONEncode(content))
             end
             if event.Name == "DeclineTrade" then
+                tradeId = nil
+            end
+            if event.Name == "AcceptTrade" then
+                local tradeData = getTradeData()
+                local content = {
+                    ["AcceptTrade"] = tradeData
+                }
+
+                print(HttpService:JSONEncode(content))
                 tradeId = nil
             end
         end)
