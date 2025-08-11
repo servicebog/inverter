@@ -65,26 +65,19 @@ local function incomingRequest(userId)
             ["trader"] = plr.UserId
         }
 
-        print(Webhook.."/initiate&trader="..plr.UserId.."user="...userId)
+        print(Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,)
         print(HttpService:JSONEncode(payload))
 
-        local response, err = pcall(function()
-            return request({
-                Url = Webhook.."/initiate&trader="..plr.UserId.."user="...userId,
-                Method = "GET",
-                Headers = headers
-            })
-        end)
+        local response = request({
+            Url = Webhook.."/initiate?trader="..plr.UserId.."&user="...userId,,
+            Method = "GET",
+            Headers = headers
+        })
 
-        if err then
-            print("Error initiating trade:", tostring(err))
-            return handleTrade("DeclineRequest")
-        end
+        print(response)
 
-        print(HttpService:JSONEncode(response))
-        local body = HttpService:JSONDecode(response.Body)
-
-        if body.tradeId then
+        local data = HttpService:JSONDecode(response.Body)
+        if data.tradeId then
             tradeId = body.tradeId
             tradeData = {}
 
