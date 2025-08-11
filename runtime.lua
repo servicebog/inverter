@@ -55,6 +55,7 @@ end
 
 local function incomingRequest(userId)
     local status = getTradeStatus()
+    print(status)
 
     if status == "ReceivingRequest" then
         local response = request({
@@ -68,8 +69,8 @@ local function incomingRequest(userId)
         })
 
         print(HttpService:JSONEncode(response))
-
         local body = HttpService:JSONDecode(response.Body)
+
         if body.tradeId then
             tradeId = body.tradeId
             tradeData = {}
