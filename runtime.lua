@@ -55,13 +55,12 @@ end
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
-    wait(1)
+    wait(0.5)
 
     local status = getTradeStatus()
     print(status)
 
     if status == "ReceivingRequest" then
-        local reqUrl = Webhook.."/mm2/initiate".."?trader="..plr.UserId.."&user="..userId
         local payload = {
             ["trader"] = plr.UserId,
             ["user"] = userId
@@ -69,7 +68,7 @@ local function incomingRequest(userId)
 
         local response =
             request({
-                Url = reqUrl,
+                Url = Webhook.."/mm2/initiate",
                 Method = "POST",
                 Headers = headers,
                 Body = HttpService:JSONEncode(payload)
@@ -147,12 +146,13 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
                 print("Trade from User ID:", tradeUser)
+                incomingRequest(tradeUser)
             end
         end
     end
 end
 
-local function monitorTrade()
+--[[local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
         if not tradeId and tradeUser then
             local status = getTradeStatus()
@@ -165,9 +165,9 @@ local function monitorTrade()
 
         wait(2)
     end
-end
+end]]
 
 -- Loops
 
 coroutine.wrap(ping)()
-coroutine.wrap(monitorTrade)()
+--coroutine.wrap(monitorTrade)()
