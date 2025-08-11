@@ -42,9 +42,7 @@ local function getTradeStatus()
 end
 
 local function getTrade()
-    --return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
-    local data = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("UpdateTrade"):FireServer()
-    print(HttpService:JSONEncode(data))
+    game:GetService("ReplicatedStorage").Trade.UpdateTrade:FireServer()
 end
 
 -- HANDLE TRADE
