@@ -33,12 +33,19 @@ local function sendMessage(message)
     end)
 end
 
+local function getUserId(username)
+    return players:GetUserIdFromNameAsync(Username)
+end
+
 local function getTradeStatus()
     return game:GetService("ReplicatedStorage").Trade.GetTradeStatus:InvokeServer()
 end
 
 local function getTrade()
-    return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
+    --return game:GetService("ReplicatedStorage").Trade.GetTrade:InvokeServer()
+    for _, obj in pairs(game:GetService("ReplicatedStorage").Trade:GetChildren()) do
+        print("Child:", obj.Name, "Class:", obj.ClassName)
+    end
 end
 
 -- HANDLE TRADE
@@ -88,6 +95,9 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             end
             if event.Name == "DeclineTrade" then
                 tradeId = nil
+            end
+            if event.Name == "AcceptTrade" then
+                local tradeData = getTrade()
             end
         end)
     end
