@@ -135,6 +135,10 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             end
             if event.Name == "DeclineTrade" then
                 tradeId = nil
+                tradeUser = nil
+                tradeData = {}
+                
+                print("Trade declined.")
             end
             if event.Name == "AcceptTrade" then
                 print(HttpService:JSONEncode(tradeData))
