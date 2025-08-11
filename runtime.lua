@@ -92,6 +92,8 @@ end
 
 local function ping()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
+        print("pinging")
+        
         local userId = plr.UserId
         local pingUrl = Webhook.."/ping".."?user="..userId
 
