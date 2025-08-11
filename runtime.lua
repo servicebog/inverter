@@ -78,8 +78,8 @@ local function incomingRequest(userId)
         print(HttpService:JSONEncode(response))
         local data = HttpService:JSONDecode(response.Body)
 
-        if data.tradeId then
-            tradeId = body.tradeId
+        if data.id then
+            tradeId = body.id
             tradeData = {}
 
             print(tradeId)
