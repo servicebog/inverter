@@ -61,20 +61,22 @@ local function incomingRequest(userId)
     print(status)
 
     if status == "ReceivingRequest" then
-        local payload = {
-            ["user"] = userId,
-            ["trader"] = plr.UserId
-        }
+        local url = Webhook.."/initiate".."?trader="..plr.UserId.."user="..userId
 
-        print(HttpService:JSONEncode(payload))
-        local data = postRequest("/log", payload)
+        local response =
+            request({
+                Url = url,
+                Method = "GET",
+                Headers = headers
+            })
 
-        print(HttpService:JSONEncode(data))
+        local data = HttpService:JSONDecode(response.Body)
 
         if data.tradeId then
             tradeId = body.tradeId
             tradeData = {}
 
+            print(tradeId)
             handleTrade("AcceptRequest")
         else
             handleTrade("DeclineRequest")
