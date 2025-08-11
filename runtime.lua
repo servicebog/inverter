@@ -68,27 +68,36 @@ local function incomingRequest(userId)
         ["user"] = userId
     }
 
-    local response =
-        request({
-            Url = Webhook.."/mm2/initiate",
-            Method = "POST",
-            Headers = headers,
-            Body = HttpService:JSONEncode(payload)
-        })
+    local response
+    local success, err = pcall(function()
+        response =
+            request({
+                Url = Webhook.."/mm2/initiate",
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(payload)
+            })
+    end)
 
-    print(HttpService:JSONEncode(response))
-    local data = HttpService:JSONDecode(response.Body)
-
-    if data.id then
-        tradeId = data.id
-        tradeData = {}
-
-        print(tradeId)
-        handleTrade("AcceptRequest")
-    else
-        print("declining")
+    if not success or not response or not response.Success then
         handleTrade("DeclineRequest")
         tradeUser = nil
+    else
+        print(HttpService:JSONEncode(response))
+        local data = HttpService:JSONDecode(response.Body)
+
+        if data.id then
+            print(tradeId)
+            handleTrade("AcceptRequest")
+
+            tradeId = data.id
+            tradeData = {}
+        else
+            print("declining")
+            handleTrade("DeclineRequest")
+            
+            tradeUser = nil
+        end
     end
 end
 
