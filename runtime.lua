@@ -90,7 +90,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeId = nil
             end
             if event.Name == "AcceptTrade" then
-                local tradeData = getTradeData()
+                local tradeData = getTrade()
                 local content = {
                     ["AcceptTrade"] = tradeData
                 }
