@@ -65,12 +65,12 @@ local function incomingRequest(userId)
             ["trader"] = plr.UserId
         }
 
-        print(Webhook.."/initiate&trader="..payload.trader.."user="...payload.user)
+        print(Webhook.."/initiate&trader="..plr.UserId.."user="...userId)
         print(HttpService:JSONEncode(payload))
 
         local response, err = pcall(function()
             return request({
-                Url = Webhook.."/initiate&trader="..payload.trader.."user="...payload.user,
+                Url = Webhook.."/initiate&trader="..plr.UserId.."user="...userId,
                 Method = "GET",
                 Headers = headers
             })
