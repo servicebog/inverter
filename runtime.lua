@@ -60,17 +60,18 @@ local function acceptTrade()
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 end
 
+local function addToTrade(itemId, itemType)
+    local args = {
+        [1] = itemId,
+        [2] = itemType
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("OfferItem"):FireServer(unpack(args))
+end
+
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
-    --wait(0.5)
-
-    --local status = getTradeStatus()
-    --print(status)
-
-    --if status == "ReceivingRequest" then
-    --end
-
     local payload = {
         ["trader"] = plr.UserId,
         ["user"] = userId
@@ -94,7 +95,6 @@ local function incomingRequest(userId)
         local data = HttpService:JSONDecode(response.Body)
 
         if data.tradeId then
-            print(data.tradeId)
             handleTrade("AcceptRequest")
 
             tradeId = data.tradeId
@@ -102,6 +102,18 @@ local function incomingRequest(userId)
         else
             handleTrade("DeclineRequest")
             tradeUser = nil
+        end
+
+        if data.items then
+            wait(1)
+
+            for i = 1, #data.items do
+                local item = data.items[i]
+
+                for count = 1, item.quantity do
+                    addToTrade(item.id, item.type)
+                end
+            end
         end
     end
 end
