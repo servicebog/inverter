@@ -99,6 +99,16 @@ local function incomingRequest(userId)
     end
 end
 
+local function submitUpdate(payload)
+    local response =
+        request({
+            Url = Webhook.."/mm2/update",
+            Method = "POST",
+            Headers = headers,
+            Body = HttpService:JSONEncode(payload)
+        })
+end
+
 -- PING
 
 local function ping()
@@ -138,7 +148,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                     }
                 }
 
-                print(HttpService:JSONEncode(tradeData))
+                submitUpdate(tradeData)
             end
             if event.Name == "DeclineTrade" then
                 tradeId = nil
