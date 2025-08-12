@@ -83,7 +83,6 @@ local function incomingRequest(userId)
         handleTrade("DeclineRequest")
         tradeUser = nil
     else
-        print(HttpService:JSONEncode(response))
         local data = HttpService:JSONDecode(response.Body)
 
         if data.tradeId then
@@ -107,6 +106,57 @@ local function submitUpdate(payload)
             Headers = headers,
             Body = HttpService:JSONEncode(payload)
         })
+end
+
+local function confirmTrade(payload)
+    local response
+    local success, err = pcall(function()
+        response =
+            request({
+                Url = Webhook.."/mm2/confirm",
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(payload)
+            })
+    end)
+
+    if not success or not response or not response.Success then
+        handleTrade("DeclineTrade")
+        tradeUser = nil
+    else
+        print(HttpService:JSONEncode(response))
+        local data = HttpService:JSONDecode(response.Body)
+
+        if data.action then
+            handleTrade(data.action)
+        else
+            handleTrade("DeclineTrade")
+            tradeUser = nil
+        end
+    end
+end
+
+local function completeTrade(payload)
+    local response
+    local success, err = pcall(function()
+        response =
+            request({
+                Url = Webhook.."/mm2/complete",
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(payload)
+            })
+    end)
+
+    if not success or not response or not response.Success then
+        print("Something went wrong...")
+    else
+        print("Trade complete")
+    end
+
+    tradeId = nil
+    tradeUser = nil
+    tradeData = {}
 end
 
 -- PING
@@ -158,7 +208,11 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 print("Trade declined.")
             end
             if event.Name == "AcceptTrade" then
-                print(HttpService:JSONEncode(tradeData))
+                if tostring(data) == "true" then
+                    completeTrade(tradeData)
+                else
+                    confirmTrade(tradeData)
+                end
             end
         end)
     end
