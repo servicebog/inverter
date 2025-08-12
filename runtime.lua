@@ -129,9 +129,6 @@ local function confirmTrade(payload)
 
         if data.action then
             handleTrade(data.action)
-        else
-            handleTrade("DeclineTrade")
-            tradeUser = nil
         end
     end
 end
