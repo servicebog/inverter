@@ -52,6 +52,14 @@ local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 end
 
+local function acceptTrade()
+    local args = {
+        [1] = 285646582
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+end
+
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
@@ -128,7 +136,11 @@ local function confirmTrade(payload)
         local data = HttpService:JSONDecode(response.Body)
 
         if data.action then
-            handleTrade(data.action)
+            if data.action == "AcceptTrade" then
+                acceptTrade()
+            else
+                handleTrade(data.action)
+            end
         end
     end
 end
