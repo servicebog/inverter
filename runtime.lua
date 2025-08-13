@@ -158,10 +158,6 @@ local function confirmTrade(payload)
 end
 
 local function declineTrade(tradeId)
-    tradeId = nil
-    tradeUser = nil
-    tradeData = {}
-
     local response =
         request({
             Url = Webhook.."/mm2/decline".."?tradeId="..tradeId,
@@ -235,6 +231,10 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 submitUpdate(tradeData)
             end
             if event.Name == "DeclineTrade" then
+                tradeId = nil
+                tradeUser = nil
+                tradeData = {}
+
                 declineTrade(tradeId)
             end
             if event.Name == "AcceptTrade" then
