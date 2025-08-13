@@ -221,6 +221,13 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             -- Display data content as string
             if event.Name == "CancelRequest" then
                 tradeUser = nil
+
+                if tradeId then
+                    declineTrade(tradeId)
+
+                    tradeId = nil
+                    tradeData = {}
+                end
             end
             if event.Name == "UpdateTrade" then
                 tradeData = {
