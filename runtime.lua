@@ -257,7 +257,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeUser = nil
             end
             if event.Name == "AcceptTrade" then
-                if tostring(data) == "true" and tradeComplete == "true" then
+                if tostring(data) == "true" then
                     completeTrade(tradeData)
                 else if tostring(data) == "false" then
                     confirmTrade(tradeData)
