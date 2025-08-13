@@ -7,6 +7,7 @@ local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitFor
 
 local tradeId = nil
 local tradeUser = nil
+local tradeStatus = nil
 local tradeData = {}
 
 -- REQUESTS
@@ -129,6 +130,8 @@ local function submitUpdate(payload)
 end
 
 local function confirmTrade(payload)
+    tradeStatus = "confirming"
+
     local response
     local success, err = pcall(function()
         response =
@@ -142,7 +145,9 @@ local function confirmTrade(payload)
 
     if not success or not response or not response.Success then
         handleTrade("DeclineTrade")
+
         tradeUser = nil
+        tradeStatus = nil
     else
         print(HttpService:JSONEncode(response))
         local data = HttpService:JSONDecode(response.Body)
@@ -158,6 +163,8 @@ local function confirmTrade(payload)
 end
 
 local function declineTrade(tradeId)
+    if tradeStatus == "confirming" then return end
+    
     local response =
         request({
             Url = Webhook.."/mm2/decline".."?tradeId="..tradeId,
@@ -219,17 +226,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
         event.OnClientEvent:Connect(function(data)
             print("Event:", event.Name, "Data:", tostring(data))
             -- Display data content as string
-            if event.Name == "CancelRequest" then
-                print("Canceling request")
-                --tradeUser = nil
-
-                --[[if not tradeId then
-                    declineTrade(tradeId)
-
-                    tradeId = nil
-                    tradeData = {}
-                end]]
-            end
             if event.Name == "UpdateTrade" then
                 tradeData = {
                     ["tradeId"] = tradeId,
@@ -249,9 +245,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeData = {}
             end
             if event.Name == "AcceptTrade" then
-                if tostring(data) == "true" then
-                    completeTrade(tradeData)
-                else
+                if tostring(data) == "false" then
                     confirmTrade(tradeData)
                 end
             end
@@ -262,6 +256,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
+                tradeStatus = nil
                 tradeId = nil
 
                 print("Trade from User ID:", tradeUser)
