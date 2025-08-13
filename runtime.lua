@@ -164,7 +164,7 @@ end
 
 local function declineTrade(tradeId)
     if tradeStatus == "confirming" then return end
-    
+
     local response =
         request({
             Url = Webhook.."/mm2/decline".."?tradeId="..tradeId,
@@ -189,11 +189,11 @@ local function completeTrade(payload)
         print("Something went wrong...")
     else
         print("Trade complete")
+        tradeStatus = nil
     end
 
     tradeId = nil
     tradeUser = nil
-    tradeData = {}
 end
 
 -- PING
@@ -242,12 +242,14 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 tradeId = nil
                 tradeUser = nil
-                tradeData = {}
             end
             if event.Name == "AcceptTrade" then
                 if tostring(data) == "false" then
                     confirmTrade(tradeData)
                 end
+            end
+            if event.Name == "UpdateInventory" and tradeStatus == "confirming" then
+                completeTrade(tradeData)
             end
         end)
     end
