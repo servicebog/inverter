@@ -247,10 +247,10 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 submitUpdate(tradeData)
             end
-            --[[if event.Name == "ChangeInventoryItem" then
+            if event.Name == "ChangeInventoryItem" then
                 print("Inventory updated")
                 tradeComplete = true
-            end]]
+            end
             if event.Name == "DeclineTrade" then
                 declineTrade(tradeId)
 
@@ -260,7 +260,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             if event.Name == "AcceptTrade" then
                 if tostring(data) == "true" and tradeComplete then
                     completeTrade(tradeData)
-                else if tostring(data) == "false" then
+                elseif tostring(data) == "false" then
                     confirmTrade(tradeData)
                 end
             end
