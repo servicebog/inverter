@@ -231,11 +231,11 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 submitUpdate(tradeData)
             end
             if event.Name == "DeclineTrade" then
+                declineTrade(tradeId)
+                
                 tradeId = nil
                 tradeUser = nil
                 tradeData = {}
-
-                declineTrade(tradeId)
             end
             if event.Name == "AcceptTrade" then
                 if tostring(data) == "true" then
