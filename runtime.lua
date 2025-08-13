@@ -221,6 +221,8 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             -- Display data content as string
             if event.Name == "CancelRequest" then
                 print("Canceling request")
+                print("tradeUser:", tradeUser)
+                print("tradeId:", tradeId)
                 --tradeUser = nil
 
                 --[[if not tradeId then
@@ -273,7 +275,7 @@ local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
         if not tradeId and tradeUser then
             local status = getTradeStatus()
-            --print("Trade Status:", status)
+            print("Trade Status:", status)
 
             if status == "ReceivingRequest" then
                 incomingRequest(tradeUser)
