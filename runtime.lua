@@ -221,8 +221,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             -- Display data content as string
             if event.Name == "CancelRequest" then
                 print("Canceling request")
-                print("tradeUser:", tradeUser)
-                print("tradeId:", tradeId)
                 --tradeUser = nil
 
                 --[[if not tradeId then
@@ -264,6 +262,8 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
+                tradeId = nil
+
                 print("Trade from User ID:", tradeUser)
                 --incomingRequest(tradeUser)
             end
