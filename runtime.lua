@@ -188,7 +188,6 @@ local function completeTrade(payload)
 
     tradeId = nil
     tradeUser = nil
-    tradeData = {}
 end
 
 -- PING
@@ -243,7 +242,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 submitUpdate(tradeData)
             end
-            if event.Name == "ChangeInventoryItem" and tradeId then
+            if event.Name == "ChangeInventoryItem" then
                 tradeComplete = "true"
             end
             if event.Name == "DeclineTrade" then
