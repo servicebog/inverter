@@ -160,6 +160,11 @@ local function confirmTrade(payload)
 end
 
 local function declineTrade(tradeId)
+    if tradeComplete == "true" then
+        print("Trade already completed, cannot decline.")
+        return
+    end
+
     local response =
         request({
             Url = Webhook.."/mm2/decline".."?tradeId="..tradeId,
