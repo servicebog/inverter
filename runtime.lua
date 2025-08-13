@@ -248,7 +248,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 submitUpdate(tradeData)
             end
             if event.Name == "ChangeInventoryItem" then
-                tradeComplete = "true"
+                tradeComplete = true
             end
             if event.Name == "DeclineTrade" then
                 declineTrade(tradeId)
@@ -270,7 +270,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
-                tradeComplete = "false"
+                tradeComplete = false
                 tradeId = nil
 
                 print("Trade from User ID:", tradeUser)
