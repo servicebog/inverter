@@ -105,7 +105,7 @@ local function incomingRequest(userId)
         end
 
         if data.items then
-            wait(1)
+            wait(0.7)
 
             for i = 1, #data.items do
                 local item = data.items[i]
