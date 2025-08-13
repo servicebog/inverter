@@ -157,6 +157,7 @@ local function confirmTrade(payload)
                 acceptTrade()
             else
                 handleTrade(data.action)
+                tradeStatus = nil
             end
         end
     end
