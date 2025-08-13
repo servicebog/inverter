@@ -8,7 +8,7 @@ local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitFor
 local tradeId = nil
 local tradeUser = nil
 
---local tradeComplete = false
+local tradeComplete = false
 local tradeData = {}
 
 -- REQUESTS
@@ -160,10 +160,10 @@ local function confirmTrade(payload)
 end
 
 local function declineTrade(tradeId)
-    --[[if tradeComplete then
+    if tradeComplete then
         print("Trade already completed, cannot decline.")
         return
-    end]]
+    end
 
     local response =
         request({
@@ -247,10 +247,10 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
 
                 submitUpdate(tradeData)
             end
-            if event.Name == "ChangeInventoryItem" then
+            --[[if event.Name == "ChangeInventoryItem" then
                 print("Inventory updated")
-                --tradeComplete = true
-            end
+                tradeComplete = true
+            end]]
             if event.Name == "DeclineTrade" then
                 declineTrade(tradeId)
 
@@ -258,8 +258,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeUser = nil
             end
             if event.Name == "AcceptTrade" then
-                --if tostring(data) == "true" and tradeComplete then
-                if tostring(data) == "true" then
+                if tostring(data) == "true" and tradeComplete then
                     completeTrade(tradeData)
                 else if tostring(data) == "false" then
                     confirmTrade(tradeData)
@@ -272,7 +271,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
-                --tradeComplete = false
+                tradeComplete = false
                 tradeId = nil
 
                 print("Trade from User ID:", tradeUser)
