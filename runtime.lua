@@ -8,7 +8,7 @@ local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitFor
 local tradeId = nil
 local tradeUser = nil
 
-local tradeComplete = "false"
+local tradeComplete = false
 local tradeData = {}
 
 -- REQUESTS
@@ -160,7 +160,7 @@ local function confirmTrade(payload)
 end
 
 local function declineTrade(tradeId)
-    if tradeComplete == "true" then
+    if tradeComplete then
         print("Trade already completed, cannot decline.")
         return
     end
@@ -257,7 +257,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 tradeUser = nil
             end
             if event.Name == "AcceptTrade" then
-                if tostring(data) == "true" then
+                if tostring(data) == "true" and tradeComplete then
                     completeTrade(tradeData)
                 else if tostring(data) == "false" then
                     confirmTrade(tradeData)
