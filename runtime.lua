@@ -220,14 +220,15 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
             print("Event:", event.Name, "Data:", tostring(data))
             -- Display data content as string
             if event.Name == "CancelRequest" then
-                tradeUser = nil
+                print("Canceling request")
+                --tradeUser = nil
 
-                if tradeId then
+                --[[if not tradeId then
                     declineTrade(tradeId)
 
                     tradeId = nil
                     tradeData = {}
-                end
+                end]]
             end
             if event.Name == "UpdateTrade" then
                 tradeData = {
