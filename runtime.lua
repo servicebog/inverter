@@ -84,10 +84,6 @@ local function hasCooldown(userId)
     else
         local timeLeft = os.difftime(cooldowns[userId], os.time())
 
-        print("current:", os.time())
-        print("cooldown:", cooldowns[userId])
-        print(timeLeft)
-
         if timeLeft <= 0 then
             cooldowns[userId] = nil
             return false
@@ -101,7 +97,6 @@ end
 
 local function incomingRequest(userId)
     local userCooldown = hasCooldown(userId)
-    print(userCooldown)
 
     if userCooldown then
         sendMessage("Please try again in "..userCooldown.." seconds")
