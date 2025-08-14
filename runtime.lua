@@ -265,7 +265,7 @@ local function ping()
             sendMessage(data.message)
         end
 
-        wait(180)
+        wait(60)
     end
 end
 
