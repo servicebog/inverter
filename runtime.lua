@@ -295,15 +295,11 @@ local function monitorTrade()
             end
         end
 
-        if tradeId and status == "StartTrade" and not tradeComplete then
+        if tradeId and status == "StartTrade" then
             tradeDuration = tradeDuration + 1
 
             if not tradeComplete and tradeDuration > 60 then
-                declineTrade(tradeId)
-                
-                tradeId = nil
-                tradeUser = nil
-
+                handleTrade("DeclineTrade")
                 sendMessage("Trade timed out after 60 seconds")
             end
         end
