@@ -85,14 +85,14 @@ local function hasCooldown(userId)
     if not cooldowns[userId] then
         return false
     else
-        local timeLeft = cooldowns[userId] - currentTime
+        local timeLeft = (cooldowns[userId] - currentTime) / 1000
         print(timeLeft)
 
         if timeLeft <= 0 then
             cooldowns[userId] = nil
             return false
         else
-            return timeLeft
+            return math.floor(timeLeft+0.5)
         end
     end
 end
