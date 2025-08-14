@@ -75,15 +75,14 @@ local function addToTrade(itemId, itemType)
 end
 
 local function newCooldown(userId, duration)
-    cooldowns[userId] = os.time() + (duration * 1000)
+    cooldowns[userId] = os.time() + duration
 end
 
 local function hasCooldown(userId)
     if not cooldowns[userId] then
         return false
     else
-        local timeLeft = (cooldowns[userId] - os.time()) / 1000
-        timeLeft = math.floor(timeLeft+0.5)
+        local timeLeft = os.difftime(cooldowns[userId], os.time())
 
         print("current:", os.time())
         print("cooldown:", cooldowns[userId])
