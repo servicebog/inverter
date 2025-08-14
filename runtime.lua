@@ -81,17 +81,29 @@ end
 
 local function hasCooldown(userId)
     local currentTime = os.time()
-    return cooldowns[userId] and cooldowns[userId] > currentTime
+
+    if not cooldowns[userId] then
+        return false
+    else
+        local timeLeft = cooldowns[userId] - currentTime
+        print(timeLeft)
+
+        if timeLeft <= 0 then
+            cooldowns[userId] = nil
+            return false
+        else
+            return timeLeft
+        end
+    end
 end
 
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
-    if hasCooldown(userId) then
-        local currentTime = os.time()
-        local remainingTime = cooldowns[userId] - currentTime
-        
-        sendMessage("Please try again in", remainingTime, "seconds")
+    local userCooldown = hasCooldown(userId)
+
+    if userCooldown then
+        sendMessage("Please try again in", userCooldown, "seconds")
         handleTrade("DeclineRequest")
         tradeUser = nil
 
