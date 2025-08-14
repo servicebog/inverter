@@ -299,8 +299,10 @@ local function monitorTrade()
             tradeDuration = tradeDuration + 1
 
             if not tradeComplete and tradeDuration > 60 then
-                handleTrade("DeclineTrade")
                 sendMessage("Trade timed out after 60 seconds")
+
+                handleTrade("DeclineTrade")
+                tradeUser = nil
             end
         end
 
