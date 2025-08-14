@@ -288,7 +288,6 @@ end
 local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
         local status = getTradeStatus()
-        print("Trade status:", status)
 
         if not tradeId and tradeUser then
             if status == "ReceivingRequest" then
@@ -296,9 +295,17 @@ local function monitorTrade()
             end
         end
 
-        if tradeId then
+        if tradeId and status == "StartTrade" and not tradeComplete then
             tradeDuration = tradeDuration + 1
-            print("Trade duration:", tradeDuration)
+
+            if tradeDuration > 60 then
+                declineTrade(tradeId)
+                
+                tradeId = nil
+                tradeUser = nil
+
+                sendMessage("Trade timed out after 60 seconds")
+            end
         end
 
         wait(1)
