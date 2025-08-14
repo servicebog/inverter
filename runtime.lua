@@ -298,7 +298,7 @@ local function monitorTrade()
         if tradeId and status == "StartTrade" and not tradeComplete then
             tradeDuration = tradeDuration + 1
 
-            if tradeDuration > 60 then
+            if not tradeComplete and tradeDuration > 60 then
                 declineTrade(tradeId)
                 
                 tradeId = nil
