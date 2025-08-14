@@ -12,6 +12,7 @@ local tradeDuration = 0
 local tradeComplete = false
 
 local tradeData = {}
+local cooldowns = {}
 
 -- REQUESTS
 
@@ -73,9 +74,30 @@ local function addToTrade(itemId, itemType)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("OfferItem"):FireServer(unpack(args))
 end
 
+local function newCooldown(userId, duration)
+    local currentTime = os.time()
+    cooldowns[userId] = currentTime + duration
+end
+
+local function hasCooldown(userId)
+    local currentTime = os.time()
+    return cooldowns[userId] and cooldowns[userId] > currentTime
+end
+
 -- HANDLE TRADE
 
 local function incomingRequest(userId)
+    if hasCooldown(userId) then
+        local currentTime = os.time()
+        local remainingTime = cooldowns[userId] - currentTime
+        
+        sendMessage("Please try again in", remainingTime, "seconds")
+        handleTrade("DeclineRequest")
+        tradeUser = nil
+
+        return
+    end
+
     local payload = {
         ["trader"] = plr.UserId,
         ["user"] = userId
@@ -163,6 +185,7 @@ local function confirmTrade(payload)
                 acceptTrade()
             else
                 handleTrade(data.action)
+                newCooldown(userId, 5)
             end
         end
 
@@ -298,8 +321,9 @@ local function monitorTrade()
         if tradeId and status == "StartTrade" then
             tradeDuration = tradeDuration + 1
 
-            if not tradeComplete and tradeDuration > 60 then
-                sendMessage("Trade timed out after 60 seconds")
+            if not tradeComplete and tradeDuration > 40 then
+                sendMessage("Trade timed out after 40 seconds")
+                newCooldown(tradeUser, 10)
 
                 handleTrade("DeclineTrade")
                 tradeUser = nil
