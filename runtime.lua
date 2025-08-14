@@ -76,7 +76,7 @@ end
 
 local function newCooldown(userId, duration)
     local currentTime = os.time()
-    cooldowns[userId] = currentTime + duration
+    cooldowns[userId] = currentTime + (duration * 1000)
 end
 
 local function hasCooldown(userId)
@@ -101,9 +101,10 @@ end
 
 local function incomingRequest(userId)
     local userCooldown = hasCooldown(userId)
+    print(userCooldown)
 
     if userCooldown then
-        sendMessage("Please try again in", userCooldown, "seconds")
+        sendMessage("Please try again in "..userCooldown.." seconds")
         handleTrade("DeclineRequest")
         tradeUser = nil
 
