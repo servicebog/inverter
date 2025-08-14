@@ -8,7 +8,9 @@ local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitFor
 local tradeId = nil
 local tradeUser = nil
 
+local tradeDuration = 0
 local tradeComplete = false
+
 local tradeData = {}
 
 -- REQUESTS
@@ -100,6 +102,8 @@ local function incomingRequest(userId)
             handleTrade("AcceptRequest")
 
             tradeId = data.tradeId
+            tradeDuration = 0
+
             tradeData = {}
         else
             handleTrade("DeclineRequest")
@@ -283,15 +287,21 @@ end
 
 local function monitorTrade()
     while game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 do
-        if not tradeId and tradeUser then
-            local status = getTradeStatus()
+        local status = getTradeStatus()
+        print("Trade status:", status)
 
+        if not tradeId and tradeUser then
             if status == "ReceivingRequest" then
                 incomingRequest(tradeUser)
             end
         end
 
-        wait(1.2)
+        if tradeId then
+            tradeDuration = tradeDuration + 1
+            print("Trade duration:", tradeDuration)
+        end
+
+        wait(1)
     end
 end
 
