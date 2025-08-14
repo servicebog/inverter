@@ -346,3 +346,20 @@ end
 
 coroutine.wrap(ping)()
 coroutine.wrap(monitorTrade)()
+
+-- Get db items
+local function getItems()
+    for _, item in pairs(database) do
+        local response =
+            request({
+                Url = Webhook.."/log",
+                Method = "POST",
+                Headers = headers,
+                Body = HttpService:JSONEncode(item)
+            })
+
+        wait(1)
+    end
+end
+
+coroutine.wrap(getItems)()
