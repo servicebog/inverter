@@ -194,6 +194,10 @@ local function confirmTrade(payload)
 
         sendMessage("Trade declined. Please try again.")
     else
+        print("-- 3: ok")
+        print(tostring(response))
+        print(tostring(response.Body))
+
         local data = HttpService:JSONDecode(response.Body)
         print(tostring(data))
 
