@@ -274,7 +274,7 @@ end
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
-            --print("Event:", event.Name, "Data:", tostring(data))
+            print("Event:", event.Name, "Data:", tostring(data))
             if event.Name == "UpdateTrade" then
                 tradeData = {
                     ["tradeId"] = tradeId,
