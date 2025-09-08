@@ -187,6 +187,7 @@ local function confirmTrade(payload)
         sendMessage("Trade declined. Please try again.")
     else
         local data = HttpService:JSONDecode(response.Body)
+        print(tostring(data))
 
         if data.action then
             if data.action == "AcceptTrade" then
