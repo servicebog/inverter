@@ -364,8 +364,6 @@ local function monitorUIElement(element)
     if element:IsA("TextButton") or element:IsA("ImageButton") then
         element.Activated:Connect(function()
             printClickEvent(element, true)
-            -- Optionally call acceptTrade to test if this click triggers it
-            acceptTrade()
         end)
     end
 end
