@@ -200,6 +200,7 @@ local function confirmTrade(payload)
 
         local data = HttpService:JSONDecode(response.Body)
         print(tostring(data))
+        print("action: "..data.action)
 
         if data.action then
             if data.action == "AcceptTrade" then
