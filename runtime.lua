@@ -58,6 +58,7 @@ local function handleTrade(action)
 end
 
 -- intercept
+
 local originalFireServer = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade").FireServer
 
 game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade").FireServer = function(self, ...)
@@ -71,6 +72,8 @@ game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptT
     -- Call the original FireServer to maintain functionality
     return originalFireServer(self, ...)
 end
+
+-- end of intercept
 
 local function acceptTrade()
     local args = {
