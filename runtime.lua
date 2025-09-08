@@ -1,7 +1,10 @@
 local HttpService = game:GetService("HttpService")
 local TextChatService = game:GetService("TextChatService")
+
 local Players = game:GetService("Players")
 local plr = Players.LocalPlayer
+
+local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local database = require(game.ReplicatedStorage:WaitForChild("Database"):WaitForChild("Sync"):WaitForChild("Item"))
 
@@ -58,11 +61,13 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
-    local args = {
-        [1] = 285646582
-    }
+    --local args = {
+        --[1] = 285646582
+    --}
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+    --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+
+    PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Accept"):Connect()
 end
 
 local function addToTrade(itemId, itemType)
@@ -345,7 +350,6 @@ end
 -- TRACKING CLICK EVENTS
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Function to print click event details
 local function printClickEvent(element, isUI, player)
