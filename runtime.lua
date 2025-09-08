@@ -169,6 +169,8 @@ local function submitUpdate(payload)
 end
 
 local function confirmTrade(payload)
+    print("-- 1: ok")
+
     local response
     local success, err = pcall(function()
         response =
@@ -180,7 +182,13 @@ local function confirmTrade(payload)
             })
     end)
 
+    print("-- 2: ok")
+
     if not success or not response or not response.Success then
+        print("-- 3: error")
+        print(tostring(response))
+        print(tostring(err))
+
         handleTrade("DeclineTrade")
         tradeUser = nil
 
