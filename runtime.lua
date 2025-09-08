@@ -57,24 +57,6 @@ local function handleTrade(action)
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild(action):FireServer()
 end
 
--- intercept
-
-local originalFireServer = game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade").FireServer
-
-game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade").FireServer = function(self, ...)
-    local args = {...} -- Capture all arguments
-    print("AcceptTrade FireServer triggered with args:")
-
-    for i, arg in ipairs(args) do
-        print("Arg " .. i .. ":", arg) -- Print each argument
-    end
-
-    -- Call the original FireServer to maintain functionality
-    return originalFireServer(self, ...)
-end
-
--- end of intercept
-
 local function acceptTrade()
     local args = {
         [1] = 285646582
