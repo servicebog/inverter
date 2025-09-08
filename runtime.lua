@@ -67,7 +67,7 @@ local function acceptTrade()
 
     --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 
-    PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("Trade"):WaitForChild("Actions"):WaitForChild("Accept"):WaitForChild("ActionButton"):FireServer()
+    --PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("Trade"):WaitForChild("Actions"):WaitForChild("Accept"):WaitForChild("ActionButton"):FireServer()
 end
 
 local function addToTrade(itemId, itemType)
@@ -355,6 +355,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local function printClickEvent(element, isUI, player)
     if isUI then
         print("UI Click Event: " .. element:GetFullName())
+        
+        -- print element decendants
+        for _, desc in ipairs(element:GetDescendants()) do
+            print("  Descendant: " .. desc:GetFullName())
+        end
     else
         print("ClickDetector Event: " .. element.Parent:GetFullName() .. " (Clicked by: " .. (player and player.Name or "Unknown") .. ")")
     end
