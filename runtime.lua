@@ -342,6 +342,37 @@ local function monitorTrade()
     end
 end
 
+-- MONITOR FIRESERVER
+
+-- Server script in ServerScriptService
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ServerStorage = game:GetService("ServerStorage")
+
+-- Function to connect to a RemoteEvent
+local function monitorRemoteEvent(remote)
+    if remote:IsA("RemoteEvent") then
+        remote.OnServerEvent:Connect(function(player, ...)
+            local args = {...}
+            print("RemoteEvent fired: " .. remote:GetFullName())
+            print("Player: " .. player.Name)
+            print("Arguments:")
+            for i, arg in ipairs(args) do
+                print("Arg " .. i .. ":", tostring(arg))
+            end
+        end)
+    end
+end
+
+-- Monitor existing RemoteEvents
+for _, descendant in ipairs(game:GetDescendants()) do
+    monitorRemoteEvent(descendant)
+end
+
+-- Monitor newly created RemoteEvents
+game.DescendantAdded:Connect(monitorRemoteEvent)
+
+print("Now monitoring all RemoteEvent FireServer calls on the server.")
+
 -- Loops
 
 coroutine.wrap(ping)()
