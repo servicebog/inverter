@@ -344,31 +344,60 @@ end
 
 -- TRACKING CLICK EVENTS
 
-local function printClickEvent(button)
-    print("Clicked UI element: " .. button:GetFullName())
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+local Trade = ReplicatedStorage:WaitForChild("Trade")
+local AcceptTrade = Trade:WaitForChild("AcceptTrade")
+local TradeResponse = Trade:WaitForChild("TradeResponse") -- Assuming response RemoteEvent exists
+
+-- Function to print click event details
+local function printClickEvent(element, isUI, player)
+    if isUI then
+        print("UI Click Event: " .. element:GetFullName())
+    else
+        print("ClickDetector Event: " .. element.Parent:GetFullName() .. " (Clicked by: " .. (player and player.Name or "Unknown") .. ")")
+    end
 end
 
--- Example: Monitor a specific button
-local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
-local ScreenGui = PlayerGui:WaitForChild("ScreenGui") -- Replace with your GUI name
-local Button = ScreenGui:WaitForChild("TextButton") -- Replace with your button name
+-- Function to monitor UI elements
+local function monitorUIElement(element)
+    if element:IsA("TextButton") or element:IsA("ImageButton") then
+        element.Activated:Connect(function()
+            printClickEvent(element, true)
+            -- Optionally call acceptTrade to test if this click triggers it
+            acceptTrade()
+        end)
+    end
+end
 
-Button.Activated:Connect(function()
-    printClickEvent(Button)
-end)
+-- Function to monitor ClickDetectors
+local function monitorClickDetector(clickDetector)
+    if clickDetector:IsA("ClickDetector") then
+        clickDetector.MouseClick:Connect(function(player)
+            printClickEvent(clickDetector, false, player)
+            -- Optionally call acceptTrade to test if this click triggers it
+            acceptTrade()
+        end)
+    end
+end
 
--- Example: Monitor all buttons in a ScreenGui
-local function monitorGui(gui)
-    for _, descendant in ipairs(gui:GetDescendants()) do
-        if descendant:IsA("TextButton") or descendant:IsA("ImageButton") then
-            descendant.Activated:Connect(function()
-                printClickEvent(descendant)
-            end)
+-- Monitor existing UI elements in PlayerGui
+for _, gui in ipairs(PlayerGui:GetChildren()) do
+    if gui:IsA("ScreenGui") then
+        for _, descendant in ipairs(gui:GetDescendants()) do
+            monitorUIElement(descendant)
         end
     end
 end
 
-monitorGui(ScreenGui)
+-- Monitor existing ClickDetectors in game
+for _, descendant in ipairs(game:GetDescendants()) do
+    monitorClickDetector(descendant)
+end
+
+-- Monitor dynamically created UI elements and ClickDetectors
+PlayerGui.DescendantAdded:Connect(monitorUIElement)
+game.DescendantAdded:Connect(monitorClickDetector)
 
 -- Loops
 
