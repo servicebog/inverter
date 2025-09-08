@@ -375,8 +375,6 @@ local function monitorClickDetector(clickDetector)
     if clickDetector:IsA("ClickDetector") then
         clickDetector.MouseClick:Connect(function(player)
             printClickEvent(clickDetector, false, player)
-            -- Optionally call acceptTrade to test if this click triggers it
-            acceptTrade()
         end)
     end
 end
