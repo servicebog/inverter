@@ -344,34 +344,28 @@ end
 
 -- MONITOR FIRESERVER
 
--- Server script in ServerScriptService
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerStorage = game:GetService("ServerStorage")
+-- Get the game’s Instance metatable
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
 
--- Function to connect to a RemoteEvent
-local function monitorRemoteEvent(remote)
-    if remote:IsA("RemoteEvent") then
-        remote.OnServerEvent:Connect(function(player, ...)
+-- Hook into the __namecall metamethod
+setrawmetatable(game, {
+    __namecall = function(self, ...)
+        local method = getnamecallmethod()
+        if method == "FireServer" and self.ClassName == "RemoteEvent" then
             local args = {...}
-            print("RemoteEvent fired: " .. remote:GetFullName())
-            print("Player: " .. player.Name)
+            print("FireServer called on RemoteEvent: " .. self:GetFullName())
             print("Arguments:")
             for i, arg in ipairs(args) do
-                print("Arg " .. i .. ":", tostring(arg))
+                print("Arg " .. i .. ":", tostring(arg)) -- Use tostring to handle various data types
             end
-        end)
+        end
+        -- Call the original __namecall to maintain functionality
+        return oldNamecall(self, ...)
     end
-end
+})
 
--- Monitor existing RemoteEvents
-for _, descendant in ipairs(game:GetDescendants()) do
-    monitorRemoteEvent(descendant)
-end
-
--- Monitor newly created RemoteEvents
-game.DescendantAdded:Connect(monitorRemoteEvent)
-
-print("Now monitoring all RemoteEvent FireServer calls on the server.")
+print("Now monitoring all FireServer calls.")
 
 -- Loops
 
