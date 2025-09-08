@@ -67,7 +67,7 @@ local function acceptTrade()
 
     --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 
-    PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Accept"):Connect()
+    PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("TradeActions"):WaitForChild("Accept"):WaitForChild("ActionButton"):Connect()
 end
 
 local function addToTrade(itemId, itemType)
