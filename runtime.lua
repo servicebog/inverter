@@ -346,9 +346,6 @@ end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
-local Trade = ReplicatedStorage:WaitForChild("Trade")
-local AcceptTrade = Trade:WaitForChild("AcceptTrade")
-local TradeResponse = Trade:WaitForChild("TradeResponse") -- Assuming response RemoteEvent exists
 
 -- Function to print click event details
 local function printClickEvent(element, isUI, player)
