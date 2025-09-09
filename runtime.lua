@@ -65,8 +65,7 @@ local function acceptTrade()
         [1] = 285646582
     }
 
-    --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
-    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer()
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 
     --PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("Trade"):WaitForChild("Actions"):WaitForChild("Accept"):WaitForChild("ActionButton").Activated:Fire()
 end
@@ -401,6 +400,20 @@ end
 -- Monitor dynamically created UI elements and ClickDetectors
 PlayerGui.DescendantAdded:Connect(monitorUIElement)
 game.DescendantAdded:Connect(monitorClickDetector)
+
+-- TEST
+
+local acceptRemote = ReplicatedStorage:WaitForChild("Trade"):WaitForChild("AcceptTrade")
+
+-- Hook FireServer method
+local oldFireServer = acceptRemote.FireServer
+acceptRemote.FireServer = function(self, ...args)
+    print("FireServer called with args:")
+    for i, arg in ipairs({...}) do
+        print("  Arg " .. i .. ":", arg)
+    end
+    return oldFireServer(self, ...args)  -- Proceed with original call
+end
 
 -- Loops
 
