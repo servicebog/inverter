@@ -360,8 +360,6 @@ local function printClickEvent(element, isUI, player)
         for _, desc in ipairs(element:GetDescendants()) do
             print("  Descendant: " .. desc:GetFullName())
         end
-    else
-        print("ClickDetector Event: " .. element.Parent:GetFullName() .. " (Clicked by: " .. (player and player.Name or "Unknown") .. ")")
     end
 end
 
@@ -370,15 +368,6 @@ local function monitorUIElement(element)
     if element:IsA("TextButton") or element:IsA("ImageButton") then
         element.Activated:Connect(function()
             printClickEvent(element, true)
-        end)
-    end
-end
-
--- Function to monitor ClickDetectors
-local function monitorClickDetector(clickDetector)
-    if clickDetector:IsA("ClickDetector") then
-        clickDetector.MouseClick:Connect(function(player)
-            printClickEvent(clickDetector, false, player)
         end)
     end
 end
@@ -392,28 +381,8 @@ for _, gui in ipairs(PlayerGui:GetChildren()) do
     end
 end
 
--- Monitor existing ClickDetectors in game
-for _, descendant in ipairs(game:GetDescendants()) do
-    monitorClickDetector(descendant)
-end
-
 -- Monitor dynamically created UI elements and ClickDetectors
 PlayerGui.DescendantAdded:Connect(monitorUIElement)
-game.DescendantAdded:Connect(monitorClickDetector)
-
--- TEST
-
-local acceptRemote = ReplicatedStorage:WaitForChild("Trade"):WaitForChild("AcceptTrade")
-
--- Hook FireServer method
-local oldFireServer = acceptRemote.FireServer
-acceptRemote.FireServer = function(self, ...args)
-    print("FireServer called with args:")
-    for i, arg in ipairs({...}) do
-        print("  Arg " .. i .. ":", arg)
-    end
-    return oldFireServer(self, ...args)  -- Proceed with original call
-end
 
 -- Loops
 
