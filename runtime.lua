@@ -61,13 +61,14 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
-    --local args = {
-        --[1] = 285646582
-    --}
+    local args = {
+        [1] = 285646582
+    }
 
     --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer()
 
-    PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("Trade"):WaitForChild("Actions"):WaitForChild("Accept"):WaitForChild("ActionButton").Activated:Fire()
+    --PlayerGui:WaitForChild("TradeGUI"):WaitForChild("Container"):WaitForChild("Trade"):WaitForChild("Actions"):WaitForChild("Accept"):WaitForChild("ActionButton").Activated:Fire()
 end
 
 local function addToTrade(itemId, itemType)
