@@ -71,9 +71,7 @@ local function acceptTrade()
 
     if acceptButton then
         pcall(function()
-            acceptButton.MouseButton1Down:Fire()
-            wait(0.05)
-            acceptButton.MouseButton1Up:Fire()
+            acceptButton.TouchTap:Fire()
         end)
     end
 end
