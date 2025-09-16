@@ -73,12 +73,7 @@ local function acceptTrade()
         print("inside")
 
         pcall(function()
-            for , connection in pairs(getconnections(acceptButton.MouseButton1Click)) do
-                connection:Fire()
-            end
-            for _, connection in pairs(getconnections(acceptButton.Activated)) do
-                connection:Fire()
-            end
+            acceptButton.TouchTap:Fire()
         end)
     end
 end
