@@ -70,8 +70,15 @@ local function acceptTrade()
     local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
 
     if acceptButton then
+        print("inside")
+
         pcall(function()
-            acceptButton.TouchTap:Fire()
+            for , connection in pairs(getconnections(acceptButton.MouseButton1Click)) do
+                connection:Fire()
+            end
+            for _, connection in pairs(getconnections(acceptButton.Activated)) do
+                connection:Fire()
+            end
         end)
     end
 end
