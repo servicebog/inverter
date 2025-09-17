@@ -67,26 +67,18 @@ local function acceptTrade()
 
     --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 
-    local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
+    --[[local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
 
     if acceptButton then
-        print("accepting")
-
         local success, err = pcall(function()
-            --acceptButton.MouseButton1Click:Fire() -- Error: MouseButton1Click is not a valid member of Frame
-            --acceptButton.Activated:Fire() -- Error: Fire is not a valid member of RBXScriptSignal
-
-            acceptButton.MouseButton1Down:Fire()
-            wait(0.05)
-            acceptButton.MouseButton1Up:Fire()
+            acceptButton.MouseButton1Click:Fire() -- Error: MouseButton1Click is not a valid member of Frame
+            acceptButton.Activated:Fire() -- Error: Fire is not a valid member of RBXScriptSignal
         end)
 
         if not success then
             print(err)
-        else
-            print("accepted")
         end
-    end
+    end--]]
 end
 
 local function addToTrade(itemId, itemType)
