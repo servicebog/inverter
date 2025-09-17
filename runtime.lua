@@ -73,8 +73,8 @@ local function acceptTrade()
         print("accepting")
 
         local success, err = pcall(function()
-            --acceptButton.MouseButton1Click:Fire()
-            --acceptButton.Activated:Fire()
+            --acceptButton.MouseButton1Click:Fire() -- Error: MouseButton1Click is not a valid member of Frame
+            --acceptButton.Activated:Fire() -- Error: Fire is not a valid member of RBXScriptSignal
 
             acceptButton.MouseButton1Down:Fire()
             wait(0.05)
