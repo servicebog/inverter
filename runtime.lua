@@ -73,10 +73,12 @@ local function acceptTrade()
         print("accepting")
 
         local success, err = pcall(function()
-            --acceptButton.TouchTap:Fire()
-            acceptButton.TouchTap:FireServer()
             --acceptButton.MouseButton1Click:Fire()
             --acceptButton.Activated:Fire()
+
+            acceptButton.MouseButton1Down:Fire()
+            wait(0.05)
+            acceptButton.MouseButton1Up:Fire()
         end)
 
         if not success then
