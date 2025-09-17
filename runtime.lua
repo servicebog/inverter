@@ -67,15 +67,15 @@ local function acceptTrade()
 
     --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 
-    local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.ActionButton
-    local confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.Confirm.ActionButton
+    local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
 
     if acceptButton then
         print("accepting")
 
         local success, err = pcall(function()
             --acceptButton.TouchTap:Fire()
-            acceptButton.MouseButton1Click:Fire()
+            --acceptButton.MouseButton1Click:Fire()
+            acceptButton.Activated:Fire()
         end)
 
         if not success then
