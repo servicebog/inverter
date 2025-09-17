@@ -74,7 +74,8 @@ local function acceptTrade()
 
         local success, err = pcall(function()
             --acceptButton.TouchTap:Fire()
-            acceptButton.MouseButton1Click:Fire()
+            acceptButton.TouchTap:FireServer()
+            --acceptButton.MouseButton1Click:Fire()
             --acceptButton.Activated:Fire()
         end)
 
