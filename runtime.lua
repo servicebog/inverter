@@ -65,8 +65,8 @@ local function acceptTrade()
     print(upTime)
 
     local args = {
-        [1] = 428469873,
-        [2] = upTime
+        428469873, --[1] = 428469873,
+        upTime --[2] = upTime
     }
 
     game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
