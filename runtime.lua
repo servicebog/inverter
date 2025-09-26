@@ -61,8 +61,13 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
-    local upTime = os.time() -- game:GetService("Workspace").DistributedGameTime
-    print(upTime)
+    local upTime = game:GetService("Workspace").DistributedGameTime
+
+    print(upTime) -- Time the game started running
+    print(os.time()) -- Time since epoch (1 January 1970, 00:00:00) UTC
+    print(tick()) -- Time since epoch (1 January 1970, 00:00:00) system time
+    print(time()) -- Time the game started running
+    print(elapsedTime()) -- Time since Roblox started running
 
     local args = {
         [1] = 428469873,
