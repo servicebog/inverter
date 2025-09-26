@@ -66,7 +66,7 @@ local function acceptTrade()
     local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
 
     local acceptPosX = acceptButton.AbsolutePosition.X
-    local acceptPosY = acceptButton.AbsolutePosition.Y
+    local acceptPosY = acceptButton.AbsolutePosition.Y + 30
 
     print(acceptButton.AbsolutePosition)
 
