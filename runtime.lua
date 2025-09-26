@@ -64,9 +64,11 @@ local function acceptTrade()
     local VirtualInputManager = game:GetService("VirtualInputManager")
 
     local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
-    
-    local acceptPosX = acceptButton.AbsolutePosition.X
-    local acceptPosY = acceptButton.AbsolutePosition.Y - 20
+
+    local acceptPosX = acceptButton.AbsolutePosition.X - 10
+    local acceptPosY = acceptButton.AbsolutePosition.Y
+
+    print(acceptPosX .. " " .. acceptPosY)
 
     VirtualInputManager:SendMouseButtonEvent(acceptPosX, acceptPosY, 0, true, game, 0)
     wait(0.1)
