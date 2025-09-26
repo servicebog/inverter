@@ -61,24 +61,15 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
+    local gameTime = game:GetService("Workspace").DistributedGameTime
+    print(gameTime)
+
     local args = {
-        [1] = 285646582
+        [1] = 428469873,
+        [2] = gameTime
     }
 
-    --game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
-
-    --[[local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
-
-    if acceptButton then
-        local success, err = pcall(function()
-            acceptButton.MouseButton1Click:Fire() -- Error: MouseButton1Click is not a valid member of Frame
-            acceptButton.Activated:Fire() -- Error: Fire is not a valid member of RBXScriptSignal
-        end)
-
-        if not success then
-            print(err)
-        end
-    end--]]
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 end
 
 local function addToTrade(itemId, itemType)
@@ -360,7 +351,7 @@ end
 
 -- TRACKING CLICK EVENTS
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--[[local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Function to print click event details
 local function printClickEvent(element, isUI, player)
@@ -393,7 +384,7 @@ for _, gui in ipairs(PlayerGui:GetChildren()) do
 end
 
 -- Monitor dynamically created UI elements and ClickDetectors
-PlayerGui.DescendantAdded:Connect(monitorUIElement)
+PlayerGui.DescendantAdded:Connect(monitorUIElement)--]]
 
 -- Loops
 
