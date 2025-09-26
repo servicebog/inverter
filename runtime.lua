@@ -61,7 +61,16 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
-    local upTime = game:GetService("Workspace").DistributedGameTime -- time()
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+
+    local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
+    local acceptButtonPosition = acceptButton.AbsolutePosition + (acceptButton.AbsoluteSize / 2)
+    
+    VirtualInputManager:SendMouseButtonEvent(acceptButtonPosition.X, acceptButtonPosition.Y, 0, true, game, 0)
+    wait(0.1)
+    VirtualInputManager:SendMouseButtonEvent(acceptButtonPosition.X, acceptButtonPosition.Y, 0, false, game, 0)
+
+    --[[local upTime = game:GetService("Workspace").DistributedGameTime
     print(upTime)
 
     local args = {
@@ -69,7 +78,7 @@ local function acceptTrade()
         [2] = upTime
     }
 
-    -- game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))]]
 end
 
 local function addToTrade(itemId, itemType)
