@@ -65,8 +65,8 @@ local function acceptTrade()
     print(upTime)
 
     local args = {
-        428469873, --[1] = 428469873,
-        upTime --[2] = upTime
+        [1] = 428469873,
+        [2] = upTime
     }
 
     -- game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
@@ -281,7 +281,7 @@ end
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
-            print("Event:", event.Name, "Data:", tostring(data))
+            --print("Event:", event.Name, "Data:", tostring(data))
             if event.Name == "UpdateTrade" then
                 tradeData = {
                     ["tradeId"] = tradeId,
@@ -313,7 +313,7 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     end
     if event:IsA("RemoteFunction") then
         event.OnClientInvoke = function(data)
-            print("Function:", event.Name, "Data:", tostring(data))
+            --print("Function:", event.Name, "Data:", tostring(data))
             if event.Name == "SendRequest" then
                 tradeUser = getUserId(tostring(data))
                 tradeComplete = false
@@ -351,7 +351,7 @@ end
 
 -- TRACKING CLICK EVENTS
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--[[local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Function to print click event details
 local function printClickEvent(element, isUI, player)
@@ -385,7 +385,7 @@ for _, gui in ipairs(PlayerGui:GetChildren()) do
 end
 
 -- Monitor dynamically created UI elements and ClickDetectors
-PlayerGui.DescendantAdded:Connect(monitorUIElement)
+PlayerGui.DescendantAdded:Connect(monitorUIElement)--]]
 
 -- Loops
 
