@@ -61,15 +61,15 @@ local function handleTrade(action)
 end
 
 local function acceptTrade()
-    local gameTime = game:GetService("Workspace").DistributedGameTime
-    print(gameTime)
+    local upTime = os.time() -- game:GetService("Workspace").DistributedGameTime
+    print(upTime)
 
     local args = {
         [1] = 428469873,
-        [2] = gameTime
+        [2] = upTime
     }
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+    -- game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 end
 
 local function addToTrade(itemId, itemType)
