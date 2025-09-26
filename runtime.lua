@@ -69,7 +69,7 @@ local function acceptTrade()
         upTime --[2] = upTime
     }
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
+    -- game:GetService("ReplicatedStorage"):WaitForChild("Trade"):WaitForChild("AcceptTrade"):FireServer(unpack(args))
 end
 
 local function addToTrade(itemId, itemType)
@@ -351,12 +351,13 @@ end
 
 -- TRACKING CLICK EVENTS
 
---[[local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Function to print click event details
 local function printClickEvent(element, isUI, player)
     if isUI then
         print("UI Click Event: " .. element:GetFullName())
+        print("Uptime: " .. time())
         
         -- print element decendants
         for _, desc in ipairs(element:GetDescendants()) do
@@ -384,7 +385,7 @@ for _, gui in ipairs(PlayerGui:GetChildren()) do
 end
 
 -- Monitor dynamically created UI elements and ClickDetectors
-PlayerGui.DescendantAdded:Connect(monitorUIElement)--]]
+PlayerGui.DescendantAdded:Connect(monitorUIElement)
 
 -- Loops
 
