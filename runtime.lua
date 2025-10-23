@@ -69,7 +69,7 @@ local function acceptTrade()
     local acceptPosY = acceptButton.AbsolutePosition.Y + 80
 
     if Device == "mobile" then
-        acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
+        acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI_Phone.Container.Trade.Actions.Accept
         acceptPosX = acceptButton.AbsolutePosition.X + 10
         acceptPosY = acceptButton.AbsolutePosition.Y + 20
     end
@@ -86,7 +86,7 @@ local function acceptTrade()
     local confirmPosY = confirmButton.AbsolutePosition.Y + 70
 
     if Device == "mobile" then
-        confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.Confirm
+        confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI_Phone.Container.Trade.Actions.Accept.Confirm
         confirmPosX = confirmButton.AbsolutePosition.X + 10
         confirmPosY = confirmButton.AbsolutePosition.Y + 30
     end
