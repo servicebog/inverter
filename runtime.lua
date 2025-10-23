@@ -64,10 +64,15 @@ local function acceptTrade()
     local VirtualInputManager = game:GetService("VirtualInputManager")
 
     local acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
-    local confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.Confirm
 
     local acceptPosX = acceptButton.AbsolutePosition.X + 10
     local acceptPosY = acceptButton.AbsolutePosition.Y + 80
+
+    if Device == "mobile" then
+        acceptButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept
+        acceptPosX = acceptButton.AbsolutePosition.X + 10
+        acceptPosY = acceptButton.AbsolutePosition.Y + 20
+    end
 
     VirtualInputManager:SendMouseButtonEvent(acceptPosX, acceptPosY, 0, true, game, 0)
     wait(0.1)
@@ -75,8 +80,16 @@ local function acceptTrade()
 
     wait(0.5)
 
+    local confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.Confirm
+
     local confirmPosX = confirmButton.AbsolutePosition.X + 10
     local confirmPosY = confirmButton.AbsolutePosition.Y + 70
+
+    if Device == "mobile" then
+        confirmButton = game:GetService("Players").LocalPlayer.PlayerGui.TradeGUI.Container.Trade.Actions.Accept.Confirm
+        confirmPosX = confirmButton.AbsolutePosition.X + 10
+        confirmPosY = confirmButton.AbsolutePosition.Y + 30
+    end
 
     VirtualInputManager:SendMouseButtonEvent(confirmPosX, confirmPosY, 0, true, game, 0)
     wait(0.1)
