@@ -294,16 +294,23 @@ local function ping()
         local userId = plr.UserId
         local pingUrl = Webhook.."/ping".."?user="..userId
 
-        local response =
-            request({
-                Url = pingUrl,
-                Method = "GET",
-                Headers = headers
-            })
+        local response
+        local success, err = pcall(function()
+            response =
+                request({
+                    Url = pingUrl,
+                    Method = "GET",
+                    Headers = headers
+                })
+        end)
 
-        local data = HttpService:JSONDecode(response.Body)
-        if data.message then 
-            sendMessage(data.message)
+        if not success or not response.Success then
+            print("Pinging error")
+        else
+            local data = HttpService:JSONDecode(response.Body)
+            if data.message then 
+                sendMessage(data.message)
+            end
         end
 
         wait(60)
