@@ -340,7 +340,6 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 submitUpdate(tradeData)
             end
             if event.Name == "UpdateTrade" and confirming then
-                print("Trading already confirming")
                 handleTrade("DeclineTrade")
             end
             if event.Name == "ChangeInventoryItem" then
