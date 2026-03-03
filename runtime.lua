@@ -212,8 +212,6 @@ local function submitUpdate(payload)
 end
 
 local function confirmTrade(payload)
-    confirming = true
-
     local response
     local success, err = pcall(function()
         response =
@@ -235,6 +233,7 @@ local function confirmTrade(payload)
 
         if data.action then
             if data.action == "AcceptTrade" then
+                confirming = true
                 acceptTrade()
             else
                 handleTrade(data.action)
