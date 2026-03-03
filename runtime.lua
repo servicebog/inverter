@@ -13,6 +13,7 @@ local tradeUser = nil
 
 local tradeDuration = 0
 local tradeComplete = false
+local confirming = false
 
 local tradeData = {}
 local cooldowns = {}
@@ -174,6 +175,7 @@ local function incomingRequest(userId)
 
             tradeId = data.tradeId
             tradeDuration = 0
+            confirming = false
 
             tradeData = {}
         else
@@ -210,6 +212,8 @@ local function submitUpdate(payload)
 end
 
 local function confirmTrade(payload)
+    confirming = true
+
     local response
     local success, err = pcall(function()
         response =
@@ -322,8 +326,8 @@ end
 for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
     if event:IsA("RemoteEvent") then
         event.OnClientEvent:Connect(function(data)
-            print("Event:", event.Name, "Data:", tostring(data))
-            if event.Name == "UpdateTrade" then
+            --print("Event:", event.Name, "Data:", tostring(data))
+            if event.Name == "UpdateTrade" and not confirming then
                 tradeData = {
                     ["tradeId"] = tradeId,
                     ["trade"] = {
@@ -333,6 +337,9 @@ for _, event in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
                 }
 
                 submitUpdate(tradeData)
+            end
+            if event.Name == "UpdateTrade" and confirming then
+                declineTrade(tradeId)
             end
             if event.Name == "ChangeInventoryItem" then
                 tradeComplete = true
