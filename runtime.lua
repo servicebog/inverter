@@ -384,7 +384,7 @@ local function monitorTrade()
         if tradeId and status == "StartTrade" then
             tradeDuration = tradeDuration + 1
 
-            if not tradeComplete and tradeDuration > 40 then
+            if not tradeComplete and not confirming and tradeDuration > 40 then
                 sendMessage("Trade timed out after 40 seconds")
                 newCooldown(tradeUser, 10)
 
